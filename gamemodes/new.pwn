@@ -12444,6 +12444,7 @@ public OffPMember(playerid,name[])
 }
 public LoadPlayerData(playerid)
 {
+    new rows, fields, temp[10];
     cache_get_data(rows, fields);
     if(rows)
 	{
