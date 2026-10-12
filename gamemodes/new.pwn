@@ -12446,7 +12446,6 @@ public OffPMember(playerid,name[])
 }
 public LoadPlayerData(playerid)
 {
-	new rows, fields, temp[10],login_ip[32];
     cache_get_data(rows, fields);
     if(rows)
 	{
@@ -12464,7 +12463,6 @@ public LoadPlayerData(playerid)
 		cache_get_field_content(0, "admlvl", temp), PLAYER_DATA[playerid][data_ADMLVL] = strval (temp);
 		cache_get_field_content(0, "contry", temp), PLAYER_DATA[playerid][data_CONTRY] = strval (temp);
 		cache_get_field_content(0, "register_ip", PLAYER_DATA[playerid][data_REGISTER_IP], dbHandle, 32);
-		cache_get_field_content(0, "login_ip", login_ip, dbHandle, 32);
 		cache_get_field_content(0, "email", PLAYER_DATA[playerid][data_EMAIL], dbHandle, 50);
 		cache_get_field_content(0, "regdate_day", temp), PLAYER_DATA[playerid][data_REGDATE_DAY] = strval (temp);
 		cache_get_field_content(0, "regdate_month", temp), PLAYER_DATA[playerid][data_REGDATE_MONTH] = strval (temp);
