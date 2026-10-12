@@ -170,7 +170,6 @@ new bool:X2DAY;
 forward CheckFreeKassa(playerid);
 forward CheckDonate(playerid);
 forward CheckAccount(playerid);
-forward CheckEmail(playerid);
 forward LoadPlayerData(playerid);
 forward anim_OFF(playerid);
 forward UnfreezePlayer(playerid);
@@ -1167,7 +1166,6 @@ enum P_DATA
 	data_DEXP,
 	// NO SAVE
 	data_CHANGESKIN,
-	data_ECODE,
 	bool:data_ANIM,
 	data_WALK_TIMER,
 	data_WALK_STYLE,
@@ -1472,7 +1470,6 @@ enum
 	dialog_LOGIN,
 	dialog_REFERAL,
 	dialog_SEX,
-	dialog_OKEMAIL,
 	dialog_EMAIL,
 	dialog_ANIM,
 	dialog_MAINMENU,
@@ -1658,7 +1655,6 @@ enum
 	dialog_RENTCATER,
 	dialog_CATER,
 	dialog_CASINO,
-	dialog_ALOGIN,
 	dialog_ADM_COMMAND,
 	dialog_PROMOCODE,
 	dialog_FIXCAR,
@@ -5223,15 +5219,6 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			   	mysql_function_query(dbHandle, query, true, "CheckBan", "i", playerid);
 			}
 		}
-
-		case dialog_OKEMAIL:
-  		{
-  		    if(response || !response)
-  		    {
-				if(strval(inputtext) != PLAYER_DATA[playerid][data_ECODE]) return ShowPlayerDialogFix(playerid, dialog_OKEMAIL, DIALOG_STYLE_INPUT, "{66CCFF}Email", "{FFFFFF}Введите код активации. Он был выслан к Вам на email\n{FFCC33}Чтобы свернуть игру используйте: ALT + TAB", "Далее", "");
-                ShowPlayerDialogFix(playerid, dialog_SEX, DIALOG_STYLE_MSGBOX, "{66CCFF}Пол", "{FFFFFF}Выберете пол вашего персонажа", "Мужской", "Женский");
-		  	}
-  		}
 
   		case dialog_SEX:
   		{
@@ -8813,41 +8800,6 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
    			}
 		}
 		
-		case dialog_ALOGIN:
-		{
-		    if(!response)
-		    {
-		        new str[145];
-				format(str,sizeof(str),"[A] Администратор %s (%s) [admlvl: %d] не смог авторизоваться на сервере",PLAYER_DATA[playerid][data_NAME],PLAYER_DATA[playerid][data_LOGIN_IP],PLAYER_DATA[playerid][data_ADMLVL]);
-				SendAdminMessage(COLOR_AC,str);
-	            Kick(playerid);
-		        return true;
-		    }
-		    if(response)
-		    {
-		        DeletePVar(playerid,"player_auth");
-		        PLAYER_DATA[playerid][data_LOGGED] = true;
-		        CancelSelectTextDraw(playerid);
-		        TogglePlayerControllable(playerid, true);
-		        
-       			SpawnPlayerAC(playerid);
-		
-		
-		
-		        new str[145];
-		        if(PLAYER_DATA[playerid][data_ECODE] == strval(inputtext))
-		        {
-		            for(new i = 0; i < 9; i++) TextDrawShowForPlayer(playerid, CheatText[i]);
-					format(str,sizeof(str),"[A] Администратор %s (%s) [admlvl: %d] авторизовался на сервере",PLAYER_DATA[playerid][data_NAME],PLAYER_DATA[playerid][data_LOGIN_IP],PLAYER_DATA[playerid][data_ADMLVL]);
-					SendAdminMessage(COLOR_AC,str);
-		            return true;
-				}
-				format(str,sizeof(str),"[A] Администратор %s (%s) [admlvl: %d] не смог авторизоваться на сервере",PLAYER_DATA[playerid][data_NAME],PLAYER_DATA[playerid][data_LOGIN_IP],PLAYER_DATA[playerid][data_ADMLVL]);
-				SendAdminMessage(COLOR_AC,str);
-	            Kick(playerid);
-		    }
-		}
-		
 		case dialog_SHAHTA_STOPJOB:
 		{
 		    if(!response) return true;
@@ -11583,23 +11535,6 @@ public CheckAccount(playerid)
 	return true;
 }
 
-public CheckEmail(playerid)
-{
-    new rows, fields;
-    cache_get_data(rows, fields);
-    if(rows)
-	{
-	    SendClientMessage(playerid, 0x66666600, "Данный email уже используется на этом сервере");
-	    ShowPlayerDialogFix(playerid, dialog_EMAIL, DIALOG_STYLE_INPUT, "{66CCFF}Email", "{FFFFFF}Введите адрес Вашей электронной почты\nИспользуя его, Вы сможете восстановить доступ к аккаунту\nв случае его взлома или если забудете пароль\n\nНа email будет выслан код подтверждения\nЕго нужно будет ввести в следующем окне\n\nУбедитесь в правильности ввода и нажмите 'Далее'", "Далее", "");
-	}
-	else
-    {
-  		EmailCode(playerid, PLAYER_DATA[playerid][data_EMAIL]);
-		ShowPlayerDialogFix(playerid, dialog_OKEMAIL, DIALOG_STYLE_INPUT, "{66CCFF}Email", "{FFFFFF}Введите код активации. Он был выслан к Вам на email\n{FFCC33}Чтобы свернуть игру используйте: ALT + TAB", "Далее", "");
-	}
-    return true;
-}
-
 public KamenLoaded(playerid)
 {
     if(IsPlayerAttachedObjectSlotUsed(playerid,1)) RemovePlayerAttachedObject(playerid,1);
@@ -12634,14 +12569,6 @@ public LoadPlayerData(playerid)
 		cache_get_field_content(0, "podarok7", temp), PLAYER_DATA[playerid][data_PODAROK][6] = strval (temp);
 		cache_get_field_content(0, "podarok8", temp), PLAYER_DATA[playerid][data_PODAROK][7] = strval (temp);
 		
-
-        if(PLAYER_DATA[playerid][data_ADMLVL] >= 1 && strfind(PLAYER_DATA[playerid][data_LOGIN_IP], login_ip, true) == -1)
-		{
-		    EmailCode(playerid, PLAYER_DATA[playerid][data_EMAIL]);
-            ShowPlayerDialogFix(playerid, dialog_ALOGIN, DIALOG_STYLE_INPUT, "{FFCC00}ALoign", "{FFFFFF}На Ваш электронный адрес был отправлен секртеный код\nВведите его в нижнее окошко, чтобы авторизоваться", "OK", "");
-			return true;
-		}
-
 
         new str[145];
 		if(PLAYER_DATA[playerid][data_ADMLVL] > 1)
@@ -16261,15 +16188,6 @@ stock PlayerToKvadrat(playerid, Float:min_x, Float:min_y, Float:max_x, Float:max
 	return false;
 }
 
-stock EmailCode(playerid, email[])
-{
-    new ftext[145];
-	PLAYER_DATA[playerid][data_ECODE] = random(9999);
-	format(ftext,sizeof(ftext),"Код: %d",PLAYER_DATA[playerid][data_ECODE],email);
-	//SendMail(email, "support@ragerp.ru", "Rage RolePlay", "Code", ftext);
-	SendClientMessage(playerid,-1,ftext);
-}
-
 stock ShowPlayerDialogFix(playerid, dialogid, style, caption[], info[], button1[], button2[])
 {
     if(GetPVarInt(playerid, "DialogID") != -2) return true;
@@ -16523,7 +16441,6 @@ stock ClearPlayerData(playerid)
 	PLAYER_DATA[playerid][data_PODMEMBER] = 0;
 	PLAYER_DATA[playerid][data_LEADER] = 0;
 	PLAYER_DATA[playerid][data_RANK] = 0;
-	PLAYER_DATA[playerid][data_ECODE] = 0;
 	for(new i = 0; i < 4; i++) casino_point[playerid][i] = 0;
 	casino_update[playerid] = 0;
 	

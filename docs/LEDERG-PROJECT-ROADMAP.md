@@ -5,6 +5,8 @@
 - [x] Rename faction display labels while preserving IDs 5, 6, and 7.
 - [x] Remove timed VK promotion without removing save operations.
 - [x] Remove hard-coded DB macros; add local config templates and ignore rules.
+- [x] Remove email-code verification and admin email challenge while retaining the registration email field.
+- [x] Confirm the existing SQL schema already supports stored email; no migration needed.
 - [ ] Rotate exposed credentials and clean sensitive Git history.
 - [ ] Compile matching `gamemodes/new.amx` with compatible compiler/includes.
 

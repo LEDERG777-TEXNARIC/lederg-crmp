@@ -7,6 +7,8 @@ Legacy Pawn/CR-MP roleplay gamemode, being rebranded in reviewable steps.
 - Removed recurring VK promotion while preserving auto-save calls.
 - Replaced old in-game TextDraw branding.
 - Removed hard-coded MySQL credential macros from the source.
+- Registration still collects and stores an email address, but no email verification code is required or sent. Admin login no longer blocks on the broken email-code challenge.
+- The existing SQL dump already defines `accounts.email` and `accounts.id` AUTO_INCREMENT; no schema migration is needed for this change.
 
 ## Setup
 
