@@ -5179,7 +5179,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				getdate(PLAYER_DATA[playerid][data_REGDATE_YEAR], PLAYER_DATA[playerid][data_REGDATE_MONTH], PLAYER_DATA[playerid][data_REGDATE_DAY]);
 				GetPlayerIp(playerid,PLAYER_DATA[playerid][data_REGISTER_IP],32);
 				strmid(PLAYER_DATA[playerid][data_PASSWORD], inputtext, 0, strlen(inputtext), 30);
-				ShowPlayerDialogFix(playerid, dialog_EMAIL, DIALOG_STYLE_INPUT, "{66CCFF}Email", "{FFFFFF}Введите адрес Вашей электронной почты\nИспользуя его, Вы сможете восстановить доступ к аккаунту\nв случае его взлома или если забудете пароль\n\nУбедитесь в правильности ввода и нажмите 'Далее'", "Далее", "");
+				ShowPlayerDialogFix(playerid, dialog_EMAIL, DIALOG_STYLE_INPUT, "{66CCFF}Email", "{FFFFFF}Укажите email для аккаунта. Подтверждение по почте не требуется.\nНажмите Далее.", "Далее", "");
 			}
 		}
 
@@ -5188,10 +5188,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if(response || !response)
             {
                // new query[46+50];
-                if(!strlen(inputtext)) return ShowPlayerDialogFix(playerid, dialog_EMAIL, DIALOG_STYLE_INPUT, "{66CCFF}Email", "{FFFFFF}Введите адрес Вашей электронной почты\nИспользуя его, Вы сможете восстановить доступ к аккаунту\nв случае его взлома или если забудете пароль\n\nУбедитесь в правильности ввода и нажмите 'Далее'", "Далее", "");
+                if(!strlen(inputtext)) return ShowPlayerDialogFix(playerid, dialog_EMAIL, DIALOG_STYLE_INPUT, "{66CCFF}Email", "{FFFFFF}Укажите email для аккаунта. Подтверждение по почте не требуется.\nНажмите Далее.", "Далее", "");
                 if(strfind(inputtext, "@", true) == -1 || strfind(inputtext, "\n", true) != -1 || strfind(inputtext, ".", true) == -1)
                 {
-                    ShowPlayerDialogFix(playerid, dialog_EMAIL, DIALOG_STYLE_INPUT, "{66CCFF}Email", "{FFFFFF}Введите адрес Вашей электронной почты\nИспользуя его, Вы сможете восстановить доступ к аккаунту\nв случае его взлома или если забудете пароль\n\nУбедитесь в правильности ввода и нажмите 'Далее'", "Далее", "");
+                    ShowPlayerDialogFix(playerid, dialog_EMAIL, DIALOG_STYLE_INPUT, "{66CCFF}Email", "{FFFFFF}Укажите email для аккаунта. Подтверждение по почте не требуется.\nНажмите Далее.", "Далее", "");
                     return true;
                 }
                 strmid(PLAYER_DATA[playerid][data_EMAIL], inputtext, 0, strlen(inputtext), 50);
