@@ -1,0 +1,917 @@
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3e, (C)2005-2012 SA-MP Team
+
+[00:41:29] bind = ""  (string)
+[00:41:29] 
+[00:41:29] Server Plugins
+[00:41:29] --------------
+[00:41:29]  Loading plugin: crashdetect.so
+[00:41:29]   CrashDetect v4.15.1 is OK.
+[00:41:29]   Loaded.
+[00:41:29]  Loading plugin: mysql.so
+[00:41:29]   Failed (libmysqlclient_r.so.16: cannot open shared object file: No such file or directory)
+[00:41:29]  Loading plugin: mysql_static.so
+[00:41:29]  >> plugin.mysql: R39-3 successfully loaded.
+[00:41:29]   Loaded.
+[00:41:29]  Loading plugin: sscanf.so
+[00:41:29] 
+
+[00:41:29]  ===============================
+
+[00:41:29]       sscanf plugin loaded.     
+
+[00:41:29]          Version:  2.8.1        
+
+[00:41:29]    (c) 2012 Alex "Y_Less" Cole  
+
+[00:41:29]  ===============================
+
+[00:41:29]   Loaded.
+[00:41:29]  Loading plugin: streamer.so
+[00:41:29] 
+
+*** Streamer Plugin v2.7.8 by Incognito loaded ***
+
+[00:41:29]   Loaded.
+[00:41:29]  Loading plugin: iTD.so
+[00:41:29]   Failed (plugins/iTD.so: cannot open shared object file: No such file or directory)
+[00:41:29]  Loaded 4 plugins.
+
+[00:41:29] 
+[00:41:29] Filterscripts
+[00:41:29] ---------------
+[00:41:29]   Loaded 0 filterscripts.
+
+[00:41:31] OnGameo
+[00:41:31] Server password has been removed.
+[00:41:31] MySQL connection: OK
+[00:41:31] 
+------------------------------
+[00:41:31]  Start date: 24.06.2016
+[00:41:31] ------------------------------
+[00:41:31] Number of vehicle models: 27
+[00:41:31] [serv_log]  Load warehouse. Time: 0 ms.
+[00:41:31] [serv_log]  Load job business. Load: 4 b. Time: 0 ms.
+[00:41:31] [serv_log]  Load auto business. Load: 2 b. Time: 1 ms.
+[00:41:34] [serv_log]  Load kvartiry. Load: 461 b. Time: 2800 ms.
+[00:41:34] [serv_log]  Load houses. Load: 115 h. Time: 99 ms.
+[00:41:34] [serv_log]  Load business. Load: 42 b. Time: 98 ms.
+[00:42:07] Incoming connection: 104.28.161.35:43605
+[00:42:07] [join] lederg has joined the server (0:104.28.161.35)
+[00:46:30] [part] lederg has left the server (0:1)
+[00:46:56] Incoming connection: 104.28.161.35:43376
+[00:46:56] [join] lederg has joined the server (0:104.28.161.35)
+[00:51:30] [part] lederg has left the server (0:1)
+[00:52:15] Incoming connection: 104.28.161.35:44776
+[00:52:16] [join] lederg has joined the server (0:104.28.161.35)
+[00:55:50] [part] lederg has left the server (0:1)
+[00:58:23] Incoming connection: 104.28.161.35:43577
+[00:58:23] [join] lederg has joined the server (0:104.28.161.35)
+[00:58:59] [chat] [lederg]: VEH 44
+[01:32:54] [part] lederg has left the server (0:1)
+[01:33:48] Incoming connection: 104.28.161.35:44143
+[01:33:48] [join] lederg has joined the server (0:104.28.161.35)
+[01:35:56] [server_log] save all. Time: 354 ms.
+[02:01:48] [part] lederg has left the server (0:1)
+[02:04:28] Incoming connection: 104.28.161.35:42807
+[02:04:29] [join] lederg has joined the server (0:104.28.161.35)
+[02:10:59] [part] lederg has left the server (0:1)
+[02:35:24] [server_log] save all. Time: 209 ms.
+[03:35:49] [server_log] save all. Time: 314 ms.
+[04:35:10] [server_log] save all. Time: 338 ms.
+[04:59:43] Setting server password to: "restartServerrp"
+[05:00:57] OnGameo
+[05:00:57] Server password has been removed.
+[05:00:58] MySQL connection: OK
+[05:00:58] 
+------------------------------
+[05:00:58]  Start date: 24.06.2016
+[05:00:58] ------------------------------
+[05:00:58] Number of vehicle models: 27
+[05:00:58] [serv_log]  Load warehouse. Time: 0 ms.
+[05:00:58] [serv_log]  Load job business. Load: 4 b. Time: 1 ms.
+[05:00:58] [serv_log]  Load auto business. Load: 2 b. Time: 0 ms.
+[05:01:00] [serv_log]  Load kvartiry. Load: 461 b. Time: 2596 ms.
+[05:01:01] [serv_log]  Load houses. Load: 115 h. Time: 101 ms.
+[05:01:01] [serv_log]  Load business. Load: 42 b. Time: 98 ms.
+[05:35:46] [server_log] save all. Time: 275 ms.
+[06:35:06] [server_log] save all. Time: 366 ms.
+[07:35:28] [server_log] save all. Time: 255 ms.
+[08:35:50] [server_log] save all. Time: 128 ms.
+[09:35:14] [server_log] save all. Time: 307 ms.
+[10:35:43] [server_log] save all. Time: 379 ms.
+[11:35:13] [server_log] save all. Time: 279 ms.
+[11:54:59] Incoming connection: 176.59.145.190:57779
+[12:31:08] Incoming connection: 212.55.97.156:65271
+[12:31:09] [join] Rock has joined the server (0:212.55.97.156)
+[12:31:12] [server_log] 212.55.97.156 is. Crasher.
+[12:35:06] [part] Rock has left the server (0:1)
+[12:35:30] Incoming connection: 212.55.97.156:60041
+[12:35:30] [join] Rock has joined the server (0:212.55.97.156)
+[12:35:34] [server_log] 212.55.97.156 is. Crasher.
+[12:35:47] [server_log] save all. Time: 456 ms.
+[12:36:44] [part] Rock has left the server (0:1)
+[12:37:06] Incoming connection: 212.55.97.156:55196
+[12:37:06] [join] Rock has joined the server (0:212.55.97.156)
+[12:37:26] [part] Rock has left the server (0:1)
+[12:38:04] Incoming connection: 212.55.97.156:50727
+[12:38:04] [join] Rock has joined the server (0:212.55.97.156)
+[12:38:08] [server_log] 212.55.97.156 is. Crasher.
+[12:46:16] [part] Rock has left the server (0:1)
+[12:47:28] Incoming connection: 212.55.97.156:55949
+[12:47:28] [join] Rock has joined the server (0:212.55.97.156)
+[12:53:12] [serv_log] 212.55.97.156 attemp is RCON
+[12:53:12] [part] Rock has left the server (0:2)
+[12:53:12] RCON (In-Game): Player #0 (Rock) <paroltopik> failed login.
+[12:55:27] [debug] Server received interrupt signal
+[12:55:27] [debug] Native backtrace:
+[12:55:27] [debug] #0 f7969e8b in _ZN10StackTraceC1EPv () from plugins/crashdetect.so
+[12:55:27] [debug] #1 f7962bcf in _ZN11CrashDetect20PrintNativeBacktraceERSoPv () from plugins/crashdetect.so
+[12:55:27] [debug] #2 f7963dbc in _ZN11CrashDetect20PrintNativeBacktraceEPv () from plugins/crashdetect.so
+[12:55:27] [debug] #3 f7964176 in _ZN11CrashDetect11OnInterruptEPv () from plugins/crashdetect.so
+[12:55:27] [debug] #4 f7969a7c in ?? () from plugins/crashdetect.so
+[12:55:27] [debug] #5 f7f18580 in __kernel_rt_sigreturn () from linux-gate.so.1
+[12:55:27] [debug] #6 f7f18559 in __kernel_vsyscall () from linux-gate.so.1
+[12:55:27] [debug] #7 f7a68775 in __clock_nanosleep_time64 () from /lib/i386-linux-gnu/libc.so.6
+[12:55:27] [debug] #8 f7a6e4a9 in __nanosleep () from /lib/i386-linux-gnu/libc.so.6
+[12:55:27] [debug] #9 f7aa8c6f in usleep () from /lib/i386-linux-gnu/libc.so.6
+[12:55:27] [debug] #10 08077c3e in ?? () from ./samp03svr-cr
+[12:55:27] [debug] #11 f79b22d5 in ?? () from /lib/i386-linux-gnu/libc.so.6
+[12:55:27] [debug] #12 f79b2398 in __libc_start_main () from /lib/i386-linux-gnu/libc.so.6
+[12:55:27] [debug] #13 0804b4c1 in __gxx_personality_v0 () from ./samp03svr-cr
+[12:55:27] --- Server Shutting Down.
+[12:55:28] plugin.mysql: Unloading plugin...
+[12:55:28] plugin.mysql: Plugin unloaded.
+[12:55:28] 
+
+[12:55:28]  ===============================
+
+[12:55:28]      sscanf plugin unloaded.    
+
+[12:55:28]  ===============================
+
+[12:55:28] 
+
+*** Streamer Plugin v2.7.8 by Incognito unloaded ***
+
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3e, (C)2005-2012 SA-MP Team
+
+[12:55:30] bind = ""  (string)
+[12:55:30] 
+[12:55:30] Server Plugins
+[12:55:30] --------------
+[12:55:30]  Loading plugin: crashdetect.so
+[12:55:30]   CrashDetect v4.15.1 is OK.
+[12:55:30]   Loaded.
+[12:55:30]  Loading plugin: mysql.so
+[12:55:30]   Failed (libmysqlclient_r.so.16: cannot open shared object file: No such file or directory)
+[12:55:30]  Loading plugin: mysql_static.so
+[12:55:30]  >> plugin.mysql: R39-3 successfully loaded.
+[12:55:30]   Loaded.
+[12:55:30]  Loading plugin: sscanf.so
+[12:55:30] 
+
+[12:55:30]  ===============================
+
+[12:55:30]       sscanf plugin loaded.     
+
+[12:55:30]          Version:  2.8.1        
+
+[12:55:30]    (c) 2012 Alex "Y_Less" Cole  
+
+[12:55:30]  ===============================
+
+[12:55:30]   Loaded.
+[12:55:30]  Loading plugin: streamer.so
+[12:55:30] 
+
+*** Streamer Plugin v2.7.8 by Incognito loaded ***
+
+[12:55:30]   Loaded.
+[12:55:30]  Loading plugin: iTD.so
+[12:55:30]   Failed (plugins/iTD.so: cannot open shared object file: No such file or directory)
+[12:55:30]  Loaded 4 plugins.
+
+[12:55:30] 
+[12:55:30] Filterscripts
+[12:55:30] ---------------
+[12:55:30]   Loaded 0 filterscripts.
+
+[12:55:32] OnGameo
+[12:55:32] Server password has been removed.
+[12:55:32] MySQL connection: OK
+[12:55:32] 
+------------------------------
+[12:55:32]  Start date: 24.06.2016
+[12:55:32] ------------------------------
+[12:55:32] Number of vehicle models: 27
+[12:55:32] [serv_log]  Load warehouse. Time: 1 ms.
+[12:55:32] [serv_log]  Load job business. Load: 4 b. Time: 0 ms.
+[12:55:32] [serv_log]  Load auto business. Load: 2 b. Time: 0 ms.
+[12:55:36] [serv_log]  Load kvartiry. Load: 461 b. Time: 3203 ms.
+[12:55:36] [serv_log]  Load houses. Load: 115 h. Time: 100 ms.
+[12:55:36] [serv_log]  Load business. Load: 42 b. Time: 99 ms.
+[12:56:29] Incoming connection: 212.55.97.156:54427
+[12:56:30] [join] Rock has joined the server (0:212.55.97.156)
+[12:57:15] Only create trains with AddStaticVehicle/Ex
+[13:00:55] [death] Rock died 255
+[13:03:00] [part] Rock has left the server (0:1)
+[13:04:20] Incoming connection: 212.55.97.156:54943
+[13:04:20] [join] Rock has joined the server (0:212.55.97.156)
+[13:11:54] [chat] [Rock]: leave
+[13:12:23] [part] Rock has left the server (0:1)
+[13:13:12] Incoming connection: 212.55.97.156:58567
+[13:13:12] [join] Rock has joined the server (0:212.55.97.156)
+[13:15:07] Only create trains with AddStaticVehicle/Ex
+[13:15:27] Only create trains with AddStaticVehicle/Ex
+[13:15:32] Only create trains with AddStaticVehicle/Ex
+[13:15:39] Only create trains with AddStaticVehicle/Ex
+[13:15:53] Only create trains with AddStaticVehicle/Ex
+[13:16:00] Only create trains with AddStaticVehicle/Ex
+[13:16:43] [chat] [Rock]: f
+[13:17:25] [part] Rock has left the server (0:1)
+[13:18:01] Incoming connection: 212.55.97.156:53187
+[13:18:02] [join] Rock has joined the server (0:212.55.97.156)
+[13:24:29] [part] Rock has left the server (0:1)
+[13:24:52] Incoming connection: 212.55.97.156:64777
+[13:24:52] [join] Rock has joined the server (0:212.55.97.156)
+[13:30:24] [part] Rock has left the server (0:1)
+[13:30:48] Incoming connection: 212.55.97.156:58514
+[13:30:49] [join] Rock has joined the server (0:212.55.97.156)
+[13:33:12] [part] Rock has left the server (0:1)
+[13:35:14] Incoming connection: 212.55.97.156:64543
+[13:35:14] [join] Rock has joined the server (0:212.55.97.156)
+[13:35:54] [server_log] save all. Time: 452 ms.
+[13:46:48] Only create trains with AddStaticVehicle/Ex
+[14:05:27] [part] Rock has left the server (0:1)
+[14:06:27] Incoming connection: 212.55.97.156:49380
+[14:06:28] [join] Rock has joined the server (0:212.55.97.156)
+[14:19:03] [debug] Run time error 4: "Array index out of bounds"
+[14:19:03] [debug]  Accessing element at index 65535 past array upper bound 1999
+[14:19:03] [debug] AMX backtrace:
+[14:19:03] [debug] #0 0028d244 in public OnDialogResponse (playerid=0, dialogid=45, response=1, listitem=-1, inputtext[]=@00535ed8 "") at C:\Users\Максим\Downloads\Готовый сервер Namalsk RolePlay ver 2.0 для 3е\Готовый сервер Namalsk RolePlay ver 2.0 для 3е\gamemodes\new.pwn:8239
+[14:27:52] [part] Rock has left the server (0:1)
+[14:28:20] Incoming connection: 212.55.97.156:50787
+[14:28:21] [join] Rock has joined the server (0:212.55.97.156)
+[14:30:07] [part] Rock has left the server (0:1)
+[14:30:43] Incoming connection: 212.55.97.156:52619
+[14:30:43] [join] Rock has joined the server (0:212.55.97.156)
+[14:31:53] [part] Rock has left the server (0:1)
+[14:32:26] Incoming connection: 193.41.130.214:2951
+[14:32:52] Incoming connection: 212.55.97.156:50287
+[14:32:52] [join] Rock has joined the server (0:212.55.97.156)
+[14:33:54] Incoming connection: 193.41.130.214:18904
+[14:33:55] [join] adam00 has joined the server (1:193.41.130.214)
+[14:35:52] [server_log] save all. Time: 514 ms.
+[14:36:53] [chat] [adam00]: `gyhujikolp;[']
+[14:37:01] [part] Rock has left the server (0:1)
+[14:41:23] Incoming connection: 212.55.97.156:51198
+[14:41:23] [join] Rock has joined the server (0:212.55.97.156)
+[14:41:55] [part] adam00 has left the server (1:1)
+[14:43:13] [part] Rock has left the server (0:1)
+[15:27:25] Incoming connection: 212.55.97.156:63623
+[15:27:26] [join] Rock has joined the server (0:212.55.97.156)
+[15:35:36] [server_log] save all. Time: 422 ms.
+[15:47:13] [part] Rock has left the server (0:1)
+[16:27:01] Incoming connection: 212.55.97.156:62904
+[16:27:02] [join] Rock has joined the server (0:212.55.97.156)
+[16:27:23] [part] Rock has left the server (0:1)
+[16:27:47] Incoming connection: 212.55.97.156:57324
+[16:27:47] [join] Rock has joined the server (0:212.55.97.156)
+[16:35:20] [server_log] save all. Time: 476 ms.
+[16:35:39] [chat] [Rock]: p
+[16:36:56] [part] Rock has left the server (0:1)
+[16:37:24] Incoming connection: 212.55.97.156:57463
+[16:37:24] [join] Rock has joined the server (0:212.55.97.156)
+[16:41:49] [part] Rock has left the server (0:1)
+[18:35:40] [server_log] save all. Time: 296 ms.
+[19:35:20] [server_log] save all. Time: 429 ms.
+[21:24:08] [debug] Server received interrupt signal
+[21:24:08] [debug] Native backtrace:
+[21:24:08] [debug] #0 f7964e8b in _ZN10StackTraceC1EPv () from plugins/crashdetect.so
+[21:24:08] [debug] #1 f795dbcf in _ZN11CrashDetect20PrintNativeBacktraceERSoPv () from plugins/crashdetect.so
+[21:24:08] [debug] #2 f795edbc in _ZN11CrashDetect20PrintNativeBacktraceEPv () from plugins/crashdetect.so
+[21:24:08] [debug] #3 f795f176 in _ZN11CrashDetect11OnInterruptEPv () from plugins/crashdetect.so
+[21:24:08] [debug] #4 f7964a7c in ?? () from plugins/crashdetect.so
+[21:24:08] [debug] #5 f7f13580 in __kernel_rt_sigreturn () from linux-gate.so.1
+[21:24:08] [debug] #6 f7f13559 in __kernel_vsyscall () from linux-gate.so.1
+[21:24:08] [debug] #7 f7a63775 in __clock_nanosleep_time64 () from /lib/i386-linux-gnu/libc.so.6
+[21:24:08] [debug] #8 f7a694a9 in __nanosleep () from /lib/i386-linux-gnu/libc.so.6
+[21:24:08] [debug] #9 f7aa3c6f in usleep () from /lib/i386-linux-gnu/libc.so.6
+[21:24:08] [debug] #10 08077c3e in ?? () from ./samp03svr-cr
+[21:24:08] [debug] #11 f79ad2d5 in ?? () from /lib/i386-linux-gnu/libc.so.6
+[21:24:08] [debug] #12 f79ad398 in __libc_start_main () from /lib/i386-linux-gnu/libc.so.6
+[21:24:08] [debug] #13 0804b4c1 in __gxx_personality_v0 () from ./samp03svr-cr
+[21:24:08] --- Server Shutting Down.
+[21:24:08] plugin.mysql: Unloading plugin...
+[21:24:08] plugin.mysql: Plugin unloaded.
+[21:24:08] 
+
+[21:24:08]  ===============================
+
+[21:24:08]      sscanf plugin unloaded.    
+
+[21:24:08]  ===============================
+
+[21:24:08] 
+
+*** Streamer Plugin v2.7.8 by Incognito unloaded ***
+
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3e, (C)2005-2012 SA-MP Team
+
+[21:24:10] bind = ""  (string)
+[21:24:10] 
+[21:24:10] Server Plugins
+[21:24:10] --------------
+[21:24:10]  Loading plugin: crashdetect.so
+[21:24:10]   CrashDetect v4.15.1 is OK.
+[21:24:10]   Loaded.
+[21:24:10]  Loading plugin: mysql.so
+[21:24:10]   Failed (libmysqlclient_r.so.16: cannot open shared object file: No such file or directory)
+[21:24:10]  Loading plugin: mysql_static.so
+[21:24:11]  >> plugin.mysql: R39-3 successfully loaded.
+[21:24:11]   Loaded.
+[21:24:11]  Loading plugin: sscanf.so
+[21:24:11] 
+
+[21:24:11]  ===============================
+
+[21:24:11]       sscanf plugin loaded.     
+
+[21:24:11]          Version:  2.8.1        
+
+[21:24:11]    (c) 2012 Alex "Y_Less" Cole  
+
+[21:24:11]  ===============================
+
+[21:24:11]   Loaded.
+[21:24:11]  Loading plugin: streamer.so
+[21:24:11] 
+
+*** Streamer Plugin v2.7.8 by Incognito loaded ***
+
+[21:24:11]   Loaded.
+[21:24:11]  Loading plugin: iTD.so
+[21:24:11]   Failed (plugins/iTD.so: cannot open shared object file: No such file or directory)
+[21:24:11]  Loaded 4 plugins.
+
+[21:24:11] 
+[21:24:11] Filterscripts
+[21:24:11] ---------------
+[21:24:11]   Loaded 0 filterscripts.
+
+[21:24:13] OnGameo
+[21:24:13] Server password has been removed.
+[21:24:13] MySQL connection: OK
+[21:24:13] 
+------------------------------
+[21:24:13]  Start date: 24.06.2016
+[21:24:13] ------------------------------
+[21:24:13] Number of vehicle models: 27
+[21:24:13] [serv_log]  Load warehouse. Time: 0 ms.
+[21:24:13] [serv_log]  Load job business. Load: 4 b. Time: 1 ms.
+[21:24:13] [serv_log]  Load auto business. Load: 2 b. Time: 0 ms.
+[21:24:17] [serv_log]  Load kvartiry. Load: 461 b. Time: 3401 ms.
+[21:24:17] [serv_log]  Load houses. Load: 115 h. Time: 101 ms.
+[21:24:17] [serv_log]  Load business. Load: 42 b. Time: 3 ms.
+[21:35:35] [server_log] save all. Time: 415 ms.
+[22:22:41] Incoming connection: 212.55.97.156:51018
+[22:22:41] [join] Rock has joined the server (0:212.55.97.156)
+[22:22:45] [server_log] 212.55.97.156 is. Crasher.
+[22:24:35] Incoming connection: 104.28.198.245:39036
+[22:24:35] [join] LEDERGTOP_1d591 has joined the server (1:104.28.198.245)
+[22:24:36] Incoming connection: 104.28.198.245:39367
+[22:24:36] [join] LEDERGTOP_1e252 has joined the server (2:104.28.198.245)
+[22:24:37] Incoming connection: 104.28.198.245:38999
+[22:24:37] [join] LEDERGTOP_1ef48 has joined the server (3:104.28.198.245)
+[22:24:38] Incoming connection: 104.28.198.245:38964
+[22:24:39] Incoming connection: 104.28.198.245:38969
+[22:24:39] [join] LEDERGTOP_18931 has joined the server (5:104.28.198.245)
+[22:24:40] Incoming connection: 104.28.198.245:39021
+[22:24:40] [join] LEDERGTOP_195f2 has joined the server (6:104.28.198.245)
+[22:24:41] Incoming connection: 104.28.198.245:39399
+[22:24:41] [join] LEDERGTOP_1fc3b has joined the server (4:104.28.198.245)
+[22:24:41] [join] LEDERGTOP_1a2e8 has joined the server (7:104.28.198.245)
+[22:24:42] Incoming connection: 104.28.198.245:39328
+[22:24:42] [join] LEDERGTOP_1afaa has joined the server (8:104.28.198.245)
+[22:24:43] Incoming connection: 104.28.198.245:39050
+[22:24:43] [join] LEDERGTOP_1bc9c has joined the server (9:104.28.198.245)
+[22:24:44] Incoming connection: 104.28.198.245:39318
+[22:24:44] [join] LEDERGTOP_1c95e has joined the server (10:104.28.198.245)
+[22:24:45] Incoming connection: 104.28.198.245:39009
+[22:24:45] [join] LEDERGTOP_1d654 has joined the server (11:104.28.198.245)
+[22:24:46] Incoming connection: 104.28.198.245:39251
+[22:24:46] [join] LEDERGTOP_1e346 has joined the server (12:104.28.198.245)
+[22:24:47] Incoming connection: 104.28.198.245:39249
+[22:24:47] [join] LEDERGTOP_1f008 has joined the server (13:104.28.198.245)
+[22:24:48] Incoming connection: 104.28.198.245:39297
+[22:24:48] [join] LEDERGTOP_1fcfd has joined the server (14:104.28.198.245)
+[22:24:49] Incoming connection: 104.28.198.245:39375
+[22:24:49] [join] LEDERGTOP_189bf has joined the server (15:104.28.198.245)
+[22:24:50] Incoming connection: 104.28.198.245:39172
+[22:24:50] [join] LEDERGTOP_196b5 has joined the server (16:104.28.198.245)
+[22:24:51] Incoming connection: 104.28.198.245:39305
+[22:24:51] [join] LEDERGTOP_1a3a7 has joined the server (17:104.28.198.245)
+[22:24:52] Incoming connection: 104.28.198.245:39392
+[22:24:52] [join] LEDERGTOP_1b069 has joined the server (18:104.28.198.245)
+[22:24:53] Incoming connection: 104.28.198.245:38950
+[22:24:53] [join] LEDERGTOP_1bd2b has joined the server (19:104.28.198.245)
+[22:24:54] Incoming connection: 104.28.198.245:39213
+[22:24:54] [join] LEDERGTOP_1c9ec has joined the server (20:104.28.198.245)
+[22:24:55] Incoming connection: 104.28.198.245:39376
+[22:24:55] [join] LEDERGTOP_1d6e2 has joined the server (21:104.28.198.245)
+[22:24:56] Incoming connection: 104.28.198.245:39038
+[22:24:56] [join] LEDERGTOP_1e3a4 has joined the server (22:104.28.198.245)
+[22:24:57] Incoming connection: 104.28.198.245:38944
+[22:24:58] Incoming connection: 104.28.198.245:39292
+[22:24:58] [join] LEDERGTOP_1fd5b has joined the server (24:104.28.198.245)
+[22:24:59] Incoming connection: 104.28.198.245:39234
+[22:24:59] [join] LEDERGTOP_18a4e has joined the server (25:104.28.198.245)
+[22:25:00] Incoming connection: 104.28.198.245:39119
+[22:25:01] Incoming connection: 104.28.198.245:39090
+[22:25:01] [join] LEDERGTOP_1a405 has joined the server (27:104.28.198.245)
+[22:25:02] Incoming connection: 104.28.198.245:39316
+[22:25:02] [join] LEDERGTOP_1b0c7 has joined the server (28:104.28.198.245)
+[22:25:03] Incoming connection: 104.28.198.245:39046
+[22:25:03] [join] LEDERGTOP_1970f has joined the server (26:104.28.198.245)
+[22:25:03] [join] LEDERGTOP_1bdb9 has joined the server (29:104.28.198.245)
+[22:25:04] Incoming connection: 104.28.198.245:39235
+[22:25:04] [join] LEDERGTOP_1ca7b has joined the server (30:104.28.198.245)
+[22:25:05] Incoming connection: 104.28.198.245:39207
+[22:25:05] [join] LEDERGTOP_1d771 has joined the server (31:104.28.198.245)
+[22:25:06] Incoming connection: 104.28.198.245:39364
+[22:25:06] [join] LEDERGTOP_1e466 has joined the server (32:104.28.198.245)
+[22:25:06] [join] LEDERGTOP_1f065 has joined the server (23:104.28.198.245)
+[22:25:07] Incoming connection: 104.28.198.245:39323
+[22:25:07] [join] LEDERGTOP_1f128 has joined the server (33:104.28.198.245)
+[22:25:08] Incoming connection: 104.28.198.245:39065
+[22:25:08] [join] LEDERGTOP_1fe1b has joined the server (34:104.28.198.245)
+[22:25:09] Incoming connection: 104.28.198.245:38946
+[22:25:09] [join] LEDERGTOP_18adc has joined the server (35:104.28.198.245)
+[22:25:10] Incoming connection: 104.28.198.245:39320
+[22:25:10] [join] LEDERGTOP_1979e has joined the server (36:104.28.198.245)
+[22:25:11] Incoming connection: 104.28.198.245:39059
+[22:25:12] Incoming connection: 104.28.198.245:39144
+[22:25:12] [join] LEDERGTOP_1b155 has joined the server (38:104.28.198.245)
+[22:25:13] Incoming connection: 104.28.198.245:39346
+[22:25:13] [join] LEDERGTOP_1be4b has joined the server (39:104.28.198.245)
+[22:25:14] Incoming connection: 104.28.198.245:38955
+[22:25:14] [join] LEDERGTOP_1a493 has joined the server (37:104.28.198.245)
+[22:25:14] [join] LEDERGTOP_1cb0c has joined the server (40:104.28.198.245)
+[22:25:15] Incoming connection: 104.28.198.245:38996
+[22:25:15] [join] LEDERGTOP_1d7ff has joined the server (41:104.28.198.245)
+[22:25:16] Incoming connection: 104.28.198.245:39248
+[22:25:16] [join] LEDERGTOP_1e4f5 has joined the server (42:104.28.198.245)
+[22:25:17] Incoming connection: 104.28.198.245:38978
+[22:25:17] [join] LEDERGTOP_1f1b6 has joined the server (43:104.28.198.245)
+[22:25:18] Incoming connection: 104.28.198.245:39191
+[22:25:18] [join] LEDERGTOP_1fea9 has joined the server (44:104.28.198.245)
+[22:25:19] Incoming connection: 104.28.198.245:39200
+[22:25:19] [join] LEDERGTOP_18b6b has joined the server (45:104.28.198.245)
+[22:25:20] Incoming connection: 104.28.198.245:39378
+[22:25:20] [join] LEDERGTOP_19860 has joined the server (46:104.28.198.245)
+[22:25:21] Incoming connection: 104.28.198.245:39238
+[22:25:21] [join] LEDERGTOP_1a522 has joined the server (47:104.28.198.245)
+[22:25:21] Packet was modified, sent by id: 8, ip: 104.28.198.245:39328
+[22:25:22] Incoming connection: 104.28.198.245:39232
+[22:25:22] [join] LEDERGTOP_1b1e4 has joined the server (48:104.28.198.245)
+[22:25:23] Incoming connection: 104.28.198.245:39022
+[22:25:23] [join] LEDERGTOP_1bed9 has joined the server (49:104.28.198.245)
+[22:25:23] Packet was modified, sent by id: 4, ip: 104.28.198.245:38964
+[22:25:24] Incoming connection: 104.28.198.245:39154
+[22:25:24] [join] LEDERGTOP_1cbcc has joined the server (50:104.28.198.245)
+[22:25:25] Incoming connection: 104.28.198.245:39353
+[22:25:25] [join] LEDERGTOP_1d88e has joined the server (51:104.28.198.245)
+[22:25:26] Packet was modified, sent by id: 20, ip: 104.28.198.245:39213
+[22:25:26] Incoming connection: 104.28.198.245:39204
+[22:25:26] [join] LEDERGTOP_1e54f has joined the server (52:104.28.198.245)
+[22:25:27] Incoming connection: 104.28.198.245:39099
+[22:25:27] [join] LEDERGTOP_1f245 has joined the server (53:104.28.198.245)
+[22:25:29] Incoming connection: 104.28.198.245:38919
+[22:25:29] Incoming connection: 104.28.198.245:39075
+[22:25:29] [join] LEDERGTOP_18bfc has joined the server (54:104.28.198.245)
+[22:25:29] [join] LEDERGTOP_1ff3b has joined the server (55:104.28.198.245)
+[22:25:30] Incoming connection: 104.28.198.245:38917
+[22:25:31] Incoming connection: 104.28.198.245:39037
+[22:25:31] [join] LEDERGTOP_1a5b1 has joined the server (57:104.28.198.245)
+[22:25:32] Incoming connection: 104.28.198.245:39358
+[22:25:33] Incoming connection: 104.28.198.245:39340
+[22:25:33] [join] LEDERGTOP_198ef has joined the server (56:104.28.198.245)
+[22:25:34] Incoming connection: 104.28.198.245:38986
+[22:25:34] [join] LEDERGTOP_1cc5a has joined the server (60:104.28.198.245)
+[22:25:35] Incoming connection: 104.28.198.245:39363
+[22:25:35] [join] LEDERGTOP_1b2a6 has joined the server (58:104.28.198.245)
+[22:25:35] [join] LEDERGTOP_1d950 has joined the server (61:104.28.198.245)
+[22:25:36] Incoming connection: 104.28.198.245:39391
+[22:25:36] [join] LEDERGTOP_1bf99 has joined the server (59:104.28.198.245)
+[22:25:36] [join] LEDERGTOP_1e612 has joined the server (62:104.28.198.245)
+[22:25:37] Incoming connection: 104.28.198.245:39082
+[22:25:37] [join] LEDERGTOP_1f308 has joined the server (63:104.28.198.245)
+[22:25:38] Incoming connection: 104.28.198.245:39048
+[22:25:38] [join] LEDERGTOP_1fffa has joined the server (64:104.28.198.245)
+[22:25:39] Incoming connection: 104.28.198.245:39016
+[22:25:39] [join] LEDERGTOP_18cbc has joined the server (65:104.28.198.245)
+[22:25:40] Incoming connection: 104.28.198.245:39047
+[22:25:40] [join] LEDERGTOP_199b2 has joined the server (66:104.28.198.245)
+[22:25:41] Incoming connection: 104.28.198.245:38939
+[22:25:42] [join] LEDERGTOP_1a673 has joined the server (67:104.28.198.245)
+[22:25:43] Incoming connection: 104.28.198.245:39104
+[22:25:43] Incoming connection: 104.28.198.245:39265
+[22:25:43] [join] LEDERGTOP_1c02b has joined the server (68:104.28.198.245)
+[22:25:44] Incoming connection: 104.28.198.245:39044
+[22:25:44] [join] LEDERGTOP_1ccec has joined the server (70:104.28.198.245)
+[22:25:45] Incoming connection: 104.28.198.245:38922
+[22:25:45] [join] LEDERGTOP_1d9df has joined the server (71:104.28.198.245)
+[22:25:46] Incoming connection: 104.28.198.245:39155
+[22:25:46] [join] LEDERGTOP_1b335 has joined the server (69:104.28.198.245)
+[22:25:46] [join] LEDERGTOP_1e6a0 has joined the server (72:104.28.198.245)
+[22:25:47] Incoming connection: 104.28.198.245:39350
+[22:25:47] [join] LEDERGTOP_1f362 has joined the server (73:104.28.198.245)
+[22:25:48] Incoming connection: 104.28.198.245:39308
+[22:25:48] [join] LEDERGTOP_20058 has joined the server (74:104.28.198.245)
+[22:25:49] Incoming connection: 104.28.198.245:39003
+[22:25:49] [join] LEDERGTOP_18d4a has joined the server (75:104.28.198.245)
+[22:25:50] Incoming connection: 104.28.198.245:39321
+[22:25:51] [join] LEDERGTOP_19a0c has joined the server (76:104.28.198.245)
+[22:25:51] Incoming connection: 104.28.198.245:39307
+[22:25:51] [join] LEDERGTOP_1a702 has joined the server (77:104.28.198.245)
+[22:25:52] Incoming connection: 104.28.198.245:39295
+[22:25:52] [join] LEDERGTOP_1b3c3 has joined the server (78:104.28.198.245)
+[22:25:53] Incoming connection: 104.28.198.245:38967
+[22:25:54] [join] LEDERGTOP_1c0b9 has joined the server (79:104.28.198.245)
+[22:25:54] Packet was modified, sent by id: 8, ip: 104.28.198.245:39328
+[22:25:54] Packet was modified, sent by id: 52, ip: 104.28.198.245:39204
+[22:25:54] Packet was modified, sent by id: 45, ip: 104.28.198.245:39200
+[22:25:54] Incoming connection: 104.28.198.245:39326
+[22:25:55] [join] LEDERGTOP_1cdac has joined the server (80:104.28.198.245)
+[22:25:55] Incoming connection: 104.28.198.245:38942
+[22:25:56] [join] LEDERGTOP_1da6d has joined the server (81:104.28.198.245)
+[22:25:56] Incoming connection: 104.28.198.245:39283
+[22:25:57] [join] LEDERGTOP_1e763 has joined the server (82:104.28.198.245)
+[22:25:57] Incoming connection: 104.28.198.245:38958
+[22:25:58] [join] LEDERGTOP_1f459 has joined the server (83:104.28.198.245)
+[22:25:58] Incoming connection: 104.28.198.245:39210
+[22:25:59] [join] LEDERGTOP_2011b has joined the server (84:104.28.198.245)
+[22:25:59] Incoming connection: 104.28.198.245:39153
+[22:26:00] [join] LEDERGTOP_18e0d has joined the server (85:104.28.198.245)
+[22:26:00] Incoming connection: 104.28.198.245:39179
+[22:26:01] [join] LEDERGTOP_19b03 has joined the server (86:104.28.198.245)
+[22:26:02] Incoming connection: 104.28.198.245:39130
+[22:26:03] [join] LEDERGTOP_1a7c5 has joined the server (87:104.28.198.245)
+[22:26:03] Incoming connection: 104.28.198.245:39012
+[22:26:03] Incoming connection: 104.28.198.245:39125
+[22:26:04] [join] LEDERGTOP_1b4b7 has joined the server (88:104.28.198.245)
+[22:26:04] [join] LEDERGTOP_1c179 has joined the server (89:104.28.198.245)
+[22:26:04] Incoming connection: 104.28.198.245:39239
+[22:26:05] [join] LEDERGTOP_1ce6e has joined the server (90:104.28.198.245)
+[22:26:05] Incoming connection: 104.28.198.245:39091
+[22:26:06] [join] LEDERGTOP_1db64 has joined the server (91:104.28.198.245)
+[22:26:06] Incoming connection: 104.28.198.245:38934
+[22:26:07] [join] LEDERGTOP_1e826 has joined the server (92:104.28.198.245)
+[22:26:07] Packet was modified, sent by id: 9, ip: 104.28.198.245:39050
+[22:26:07] Incoming connection: 104.28.198.245:39128
+[22:26:08] [join] LEDERGTOP_1f518 has joined the server (93:104.28.198.245)
+[22:26:08] Incoming connection: 104.28.198.245:38943
+[22:26:09] Incoming connection: 104.28.198.245:39078
+[22:26:10] [join] LEDERGTOP_18ed0 has joined the server (95:104.28.198.245)
+[22:26:10] Incoming connection: 104.28.198.245:39259
+[22:26:11] [join] LEDERGTOP_19b91 has joined the server (96:104.28.198.245)
+[22:26:11] Incoming connection: 104.28.198.245:38960
+[22:26:12] [join] LEDERGTOP_201da has joined the server (94:104.28.198.245)
+[22:26:12] [join] LEDERGTOP_1a887 has joined the server (97:104.28.198.245)
+[22:26:12] Packet was modified, sent by id: 76, ip: 104.28.198.245:39321
+[22:26:12] Incoming connection: 104.28.198.245:39315
+[22:26:13] [join] LEDERGTOP_1b549 has joined the server (98:104.28.198.245)
+[22:26:13] Incoming connection: 104.28.198.245:39327
+[22:26:14] [join] LEDERGTOP_1c23b has joined the server (99:104.28.198.245)
+[22:26:14] Packet was modified, sent by id: 11, ip: 104.28.198.245:39009
+[22:26:14] Packet was modified, sent by id: 46, ip: 104.28.198.245:39378
+[22:26:14] Incoming connection: 104.28.198.245:39393
+[22:26:15] [join] LEDERGTOP_1cf31 has joined the server (100:104.28.198.245)
+[22:26:15] Incoming connection: 104.28.198.245:38927
+[22:26:16] Incoming connection: 104.28.198.245:39184
+[22:26:17] [join] LEDERGTOP_1e8e5 has joined the server (102:104.28.198.245)
+[22:26:17] Incoming connection: 104.28.198.245:39206
+[22:26:18] [join] LEDERGTOP_1f5a7 has joined the server (103:104.28.198.245)
+[22:26:18] Incoming connection: 104.28.198.245:39007
+[22:26:19] [join] LEDERGTOP_1dbf3 has joined the server (101:104.28.198.245)
+[22:26:19] [join] LEDERGTOP_2029d has joined the server (104:104.28.198.245)
+[22:26:19] Incoming connection: 104.28.198.245:39362
+[22:26:20] [join] LEDERGTOP_18f93 has joined the server (105:104.28.198.245)
+[22:26:20] Incoming connection: 104.28.198.245:39401
+[22:26:21] [join] LEDERGTOP_19c54 has joined the server (106:104.28.198.245)
+[22:26:21] Incoming connection: 104.28.198.245:39137
+[22:26:22] [join] LEDERGTOP_1a947 has joined the server (107:104.28.198.245)
+[22:26:22] Incoming connection: 104.28.198.245:39170
+[22:26:23] [join] LEDERGTOP_1b608 has joined the server (108:104.28.198.245)
+[22:26:24] Incoming connection: 104.28.198.245:39158
+[22:26:24] [join] LEDERGTOP_1c2fe has joined the server (109:104.28.198.245)
+[22:26:25] Incoming connection: 104.28.198.245:38915
+[22:26:25] [join] LEDERGTOP_1cfc0 has joined the server (110:104.28.198.245)
+[22:26:26] Incoming connection: 104.28.198.245:39023
+[22:26:26] [join] LEDERGTOP_1dcb6 has joined the server (111:104.28.198.245)
+[22:26:27] Incoming connection: 104.28.198.245:38954
+[22:26:27] [join] LEDERGTOP_1e977 has joined the server (112:104.28.198.245)
+[22:26:28] Incoming connection: 104.28.198.245:39250
+[22:26:28] [join] LEDERGTOP_1f66a has joined the server (113:104.28.198.245)
+[22:26:28] Packet was modified, sent by id: 24, ip: 104.28.198.245:39292
+[22:26:29] Incoming connection: 104.28.198.245:39332
+[22:26:29] [join] LEDERGTOP_2032b has joined the server (114:104.28.198.245)
+[22:26:30] Incoming connection: 104.28.198.245:38976
+[22:26:30] [join] LEDERGTOP_19021 has joined the server (115:104.28.198.245)
+[22:26:32] Incoming connection: 104.28.198.245:39194
+[22:26:32] Incoming connection: 104.28.198.245:39093
+[22:26:32] [join] LEDERGTOP_1a9d5 has joined the server (116:104.28.198.245)
+[22:26:32] [join] LEDERGTOP_19ce3 has joined the server (117:104.28.198.245)
+[22:26:33] Packet was modified, sent by id: 107, ip: 104.28.198.245:39137
+[22:26:33] Packet was modified, sent by id: 1, ip: 104.28.198.245:39036
+[22:27:34] Packet was modified, sent by id: 74, ip: 104.28.198.245:39308
+[22:28:19] Packet was modified, sent by id: 2, ip: 104.28.198.245:39367
+[22:28:19] Packet was modified, sent by id: 27, ip: 104.28.198.245:39090
+[22:28:19] Packet was modified, sent by id: 71, ip: 104.28.198.245:38922
+[22:28:49] Packet was modified, sent by id: 92, ip: 104.28.198.245:38934
+[22:29:19] Packet was modified, sent by id: 50, ip: 104.28.198.245:39154
+[22:30:06] Packet was modified, sent by id: 21, ip: 104.28.198.245:39376
+[22:30:06] Packet was modified, sent by id: 36, ip: 104.28.198.245:39320
+[22:30:19] Packet was modified, sent by id: 93, ip: 104.28.198.245:39128
+[22:30:34] Packet was modified, sent by id: 89, ip: 104.28.198.245:39125
+[22:30:49] Packet was modified, sent by id: 79, ip: 104.28.198.245:38967
+[22:31:19] Packet was modified, sent by id: 72, ip: 104.28.198.245:39155
+[22:31:27] Incoming connection: 185.72.184.18:8208
+[22:31:28] [join] varyag has joined the server (118:185.72.184.18)
+[22:31:56] Packet was modified, sent by id: 49, ip: 104.28.198.245:39022
+[22:32:30] Packet was modified, sent by id: 48, ip: 104.28.198.245:39232
+[22:32:30] Packet was modified, sent by id: 53, ip: 104.28.198.245:39099
+[22:33:11] [part] Rock has left the server (0:1)
+[22:33:35] [part] varyag has left the server (118:1)
+[22:33:36] Incoming connection: 212.55.97.156:62718
+[22:33:37] [join] Rock has joined the server (0:212.55.97.156)
+[22:34:08] Packet was modified, sent by id: 16, ip: 104.28.198.245:39172
+[22:34:08] Packet was modified, sent by id: 35, ip: 104.28.198.245:38946
+[22:34:08] Packet was modified, sent by id: 32, ip: 104.28.198.245:39364
+[22:34:30] Packet was modified, sent by id: 47, ip: 104.28.198.245:39238
+[22:34:30] Packet was modified, sent by id: 57, ip: 104.28.198.245:39037
+[22:34:34] Packet was modified, sent by id: 77, ip: 104.28.198.245:39307
+[22:35:35] Packet was modified, sent by id: 80, ip: 104.28.198.245:39326
+[22:35:36] [server_log] save all. Time: 700 ms.
+[22:37:05] Packet was modified, sent by id: 38, ip: 104.28.198.245:39144
+[22:37:16] Packet was modified, sent by id: 89, ip: 104.28.198.245:39125
+[22:37:16] Packet was modified, sent by id: 88, ip: 104.28.198.245:39012
+[22:38:05] Packet was modified, sent by id: 4, ip: 104.28.198.245:38964
+[22:38:44] Packet was modified, sent by id: 40, ip: 104.28.198.245:38955
+[22:38:44] Packet was modified, sent by id: 97, ip: 104.28.198.245:38960
+[22:38:44] Packet was modified, sent by id: 83, ip: 104.28.198.245:38958
+[22:38:44] Packet was modified, sent by id: 92, ip: 104.28.198.245:38934
+[22:39:15] Packet was modified, sent by id: 39, ip: 104.28.198.245:39346
+[22:39:20] Packet was modified, sent by id: 75, ip: 104.28.198.245:39003
+[22:39:20] Packet was modified, sent by id: 83, ip: 104.28.198.245:38958
+[22:39:35] Packet was modified, sent by id: 52, ip: 104.28.198.245:39204
+[22:40:15] Packet was modified, sent by id: 41, ip: 104.28.198.245:38996
+[22:40:20] Packet was modified, sent by id: 83, ip: 104.28.198.245:38958
+[22:40:44] [part] LEDERGTOP_1d591 has left the server (1:0)
+[22:40:44] [part] LEDERGTOP_1e252 has left the server (2:0)
+[22:40:44] [part] LEDERGTOP_1ef48 has left the server (3:0)
+[22:40:44] [part] LEDERGTOP_1fc3b has left the server (4:0)
+[22:40:44] [part] LEDERGTOP_18931 has left the server (5:0)
+[22:40:45] [part] LEDERGTOP_195f2 has left the server (6:0)
+[22:40:45] [part] LEDERGTOP_1a2e8 has left the server (7:0)
+[22:40:45] [part] LEDERGTOP_1afaa has left the server (8:0)
+[22:40:45] [part] LEDERGTOP_1bc9c has left the server (9:0)
+[22:40:45] [part] LEDERGTOP_1c95e has left the server (10:0)
+[22:40:45] [part] LEDERGTOP_1d654 has left the server (11:0)
+[22:40:45] [part] LEDERGTOP_1e346 has left the server (12:0)
+[22:40:45] [part] LEDERGTOP_1f008 has left the server (13:0)
+[22:40:45] [part] LEDERGTOP_1fcfd has left the server (14:0)
+[22:40:45] [part] LEDERGTOP_189bf has left the server (15:0)
+[22:40:45] [part] LEDERGTOP_196b5 has left the server (16:0)
+[22:40:45] [part] LEDERGTOP_1a3a7 has left the server (17:0)
+[22:40:45] [part] LEDERGTOP_1b069 has left the server (18:0)
+[22:40:45] [part] LEDERGTOP_1bd2b has left the server (19:0)
+[22:40:45] [part] LEDERGTOP_1c9ec has left the server (20:0)
+[22:40:45] [part] LEDERGTOP_1d6e2 has left the server (21:0)
+[22:40:45] [part] LEDERGTOP_1e3a4 has left the server (22:0)
+[22:40:45] [part] LEDERGTOP_1f065 has left the server (23:0)
+[22:40:45] [part] LEDERGTOP_1fd5b has left the server (24:0)
+[22:40:45] [part] LEDERGTOP_18a4e has left the server (25:0)
+[22:40:45] [part] LEDERGTOP_1970f has left the server (26:0)
+[22:40:45] [part] LEDERGTOP_1a405 has left the server (27:0)
+[22:40:45] [part] LEDERGTOP_1b0c7 has left the server (28:0)
+[22:40:45] [part] LEDERGTOP_1bdb9 has left the server (29:0)
+[22:40:45] [part] LEDERGTOP_1ca7b has left the server (30:0)
+[22:40:45] [part] LEDERGTOP_1d771 has left the server (31:0)
+[22:40:45] [part] LEDERGTOP_1e466 has left the server (32:0)
+[22:40:45] [part] LEDERGTOP_1f128 has left the server (33:0)
+[22:40:45] [part] LEDERGTOP_1fe1b has left the server (34:0)
+[22:40:45] [part] LEDERGTOP_18adc has left the server (35:0)
+[22:40:45] [part] LEDERGTOP_1979e has left the server (36:0)
+[22:40:45] [part] LEDERGTOP_1a493 has left the server (37:0)
+[22:40:45] [part] LEDERGTOP_1b155 has left the server (38:0)
+[22:40:45] [part] LEDERGTOP_1be4b has left the server (39:0)
+[22:40:45] [part] LEDERGTOP_1cb0c has left the server (40:0)
+[22:40:45] [part] LEDERGTOP_1d7ff has left the server (41:0)
+[22:40:45] [part] LEDERGTOP_1e4f5 has left the server (42:0)
+[22:40:45] [part] LEDERGTOP_1f1b6 has left the server (43:0)
+[22:40:45] [part] LEDERGTOP_1fea9 has left the server (44:0)
+[22:40:45] [part] LEDERGTOP_18b6b has left the server (45:0)
+[22:40:45] [part] LEDERGTOP_19860 has left the server (46:0)
+[22:40:45] [part] LEDERGTOP_1a522 has left the server (47:0)
+[22:40:45] [part] LEDERGTOP_1b1e4 has left the server (48:0)
+[22:40:45] [part] LEDERGTOP_1bed9 has left the server (49:0)
+[22:40:45] [part] LEDERGTOP_1cbcc has left the server (50:0)
+[22:40:45] [part] LEDERGTOP_1d88e has left the server (51:0)
+[22:40:45] [part] LEDERGTOP_1e54f has left the server (52:0)
+[22:40:45] [part] LEDERGTOP_1f245 has left the server (53:0)
+[22:40:45] [part] LEDERGTOP_18bfc has left the server (54:0)
+[22:40:45] [part] LEDERGTOP_1ff3b has left the server (55:0)
+[22:40:45] [part] LEDERGTOP_198ef has left the server (56:0)
+[22:40:45] [part] LEDERGTOP_1a5b1 has left the server (57:0)
+[22:40:45] [part] LEDERGTOP_1b2a6 has left the server (58:0)
+[22:40:45] [part] LEDERGTOP_1bf99 has left the server (59:0)
+[22:40:45] [part] LEDERGTOP_1cc5a has left the server (60:0)
+[22:40:45] [part] LEDERGTOP_1d950 has left the server (61:0)
+[22:40:45] [part] LEDERGTOP_1e612 has left the server (62:0)
+[22:40:45] [part] LEDERGTOP_1f308 has left the server (63:0)
+[22:40:45] [part] LEDERGTOP_1fffa has left the server (64:0)
+[22:40:45] [part] LEDERGTOP_18cbc has left the server (65:0)
+[22:40:45] [part] LEDERGTOP_199b2 has left the server (66:0)
+[22:40:45] [part] LEDERGTOP_1a673 has left the server (67:0)
+[22:40:45] [part] LEDERGTOP_1c02b has left the server (68:0)
+[22:40:45] [part] LEDERGTOP_1b335 has left the server (69:0)
+[22:40:45] [part] LEDERGTOP_1ccec has left the server (70:0)
+[22:40:45] [part] LEDERGTOP_1d9df has left the server (71:0)
+[22:40:45] [part] LEDERGTOP_1e6a0 has left the server (72:0)
+[22:40:45] [part] LEDERGTOP_1f362 has left the server (73:0)
+[22:40:45] [part] LEDERGTOP_20058 has left the server (74:0)
+[22:40:45] [part] LEDERGTOP_18d4a has left the server (75:0)
+[22:40:45] [part] LEDERGTOP_19a0c has left the server (76:0)
+[22:40:45] [part] LEDERGTOP_1a702 has left the server (77:0)
+[22:40:45] [part] LEDERGTOP_1b3c3 has left the server (78:0)
+[22:40:45] [part] LEDERGTOP_1c0b9 has left the server (79:0)
+[22:40:45] [part] LEDERGTOP_1cdac has left the server (80:0)
+[22:40:45] [part] LEDERGTOP_1da6d has left the server (81:0)
+[22:40:45] [part] LEDERGTOP_1e763 has left the server (82:0)
+[22:40:45] [part] LEDERGTOP_1f459 has left the server (83:0)
+[22:40:45] [part] LEDERGTOP_2011b has left the server (84:0)
+[22:40:45] [part] LEDERGTOP_18e0d has left the server (85:0)
+[22:40:45] [part] LEDERGTOP_19b03 has left the server (86:0)
+[22:40:45] [part] LEDERGTOP_1a7c5 has left the server (87:0)
+[22:40:45] [part] LEDERGTOP_1b4b7 has left the server (88:0)
+[22:40:45] [part] LEDERGTOP_1c179 has left the server (89:0)
+[22:40:45] [part] LEDERGTOP_1ce6e has left the server (90:0)
+[22:40:45] [part] LEDERGTOP_1db64 has left the server (91:0)
+[22:40:45] [part] LEDERGTOP_1e826 has left the server (92:0)
+[22:40:45] [part] LEDERGTOP_1f518 has left the server (93:0)
+[22:40:45] [part] LEDERGTOP_201da has left the server (94:0)
+[22:40:45] [part] LEDERGTOP_18ed0 has left the server (95:0)
+[22:40:45] [part] LEDERGTOP_19b91 has left the server (96:0)
+[22:40:45] [part] LEDERGTOP_1a887 has left the server (97:0)
+[22:40:45] [part] LEDERGTOP_1b549 has left the server (98:0)
+[22:40:45] [part] LEDERGTOP_1c23b has left the server (99:0)
+[22:40:45] [part] LEDERGTOP_1cf31 has left the server (100:0)
+[22:40:45] [part] LEDERGTOP_1dbf3 has left the server (101:0)
+[22:40:45] [part] LEDERGTOP_1e8e5 has left the server (102:0)
+[22:40:45] [part] LEDERGTOP_1f5a7 has left the server (103:0)
+[22:40:45] [part] LEDERGTOP_2029d has left the server (104:0)
+[22:40:45] [part] LEDERGTOP_18f93 has left the server (105:0)
+[22:40:45] [part] LEDERGTOP_19c54 has left the server (106:0)
+[22:40:45] [part] LEDERGTOP_1a947 has left the server (107:0)
+[22:40:45] [part] LEDERGTOP_1b608 has left the server (108:0)
+[22:40:45] [part] LEDERGTOP_1c2fe has left the server (109:0)
+[22:40:45] [part] LEDERGTOP_1cfc0 has left the server (110:0)
+[22:40:45] [part] LEDERGTOP_1dcb6 has left the server (111:0)
+[22:40:45] [part] LEDERGTOP_1e977 has left the server (112:0)
+[22:40:45] [part] LEDERGTOP_1f66a has left the server (113:0)
+[22:40:45] [part] LEDERGTOP_2032b has left the server (114:0)
+[22:40:45] [part] LEDERGTOP_19021 has left the server (115:0)
+[22:40:45] [part] LEDERGTOP_1a9d5 has left the server (116:0)
+[22:40:45] [part] LEDERGTOP_19ce3 has left the server (117:0)
+[22:49:27] [part] Rock has left the server (0:1)
+[23:35:29] [server_log] save all. Time: 471 ms.
+[00:30:14] [debug] Server received interrupt signal
+[00:30:14] [debug] Native backtrace:
+[00:30:14] [debug] #0 f7976e8b in _ZN10StackTraceC1EPv () from plugins/crashdetect.so
+[00:30:14] [debug] #1 f796fbcf in _ZN11CrashDetect20PrintNativeBacktraceERSoPv () from plugins/crashdetect.so
+[00:30:14] [debug] #2 f7970dbc in _ZN11CrashDetect20PrintNativeBacktraceEPv () from plugins/crashdetect.so
+[00:30:14] [debug] #3 f7971176 in _ZN11CrashDetect11OnInterruptEPv () from plugins/crashdetect.so
+[00:30:14] [debug] #4 f7976a7c in ?? () from plugins/crashdetect.so
+[00:30:14] [debug] #5 f7f25580 in __kernel_rt_sigreturn () from linux-gate.so.1
+[00:30:14] [debug] #6 f7f25559 in __kernel_vsyscall () from linux-gate.so.1
+[00:30:14] [debug] #7 f7a75775 in __clock_nanosleep_time64 () from /lib/i386-linux-gnu/libc.so.6
+[00:30:14] [debug] #8 f7a7b4a9 in __nanosleep () from /lib/i386-linux-gnu/libc.so.6
+[00:30:14] [debug] #9 f7ab5c6f in usleep () from /lib/i386-linux-gnu/libc.so.6
+[00:30:14] [debug] #10 08077c3e in ?? () from ./samp03svr-cr
+[00:30:14] [debug] #11 f79bf2d5 in ?? () from /lib/i386-linux-gnu/libc.so.6
+[00:30:14] [debug] #12 f79bf398 in __libc_start_main () from /lib/i386-linux-gnu/libc.so.6
+[00:30:14] [debug] #13 0804b4c1 in __gxx_personality_v0 () from ./samp03svr-cr
+[00:30:14] --- Server Shutting Down.
+[00:30:15] plugin.mysql: Unloading plugin...
+[00:30:15] plugin.mysql: Plugin unloaded.
+[00:30:15] 
+
+[00:30:15]  ===============================
+
+[00:30:15]      sscanf plugin unloaded.    
+
+[00:30:15]  ===============================
+
+[00:30:15] 
+
+*** Streamer Plugin v2.7.8 by Incognito unloaded ***
+
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3e, (C)2005-2012 SA-MP Team
+
+[16:39:54] bind = ""  (string)
+[16:39:54] 
+[16:39:54] Server Plugins
+[16:39:54] --------------
+[16:39:54]  Loading plugin: crashdetect.so
+[16:39:54]   CrashDetect v4.15.1 is OK.
+[16:39:54]   Loaded.
+[16:39:54]  Loading plugin: mysql.so
+[16:39:54]   Failed (libmysqlclient_r.so.16: cannot open shared object file: No such file or directory)
+[16:39:54]  Loading plugin: mysql_static.so
+[16:39:54]  >> plugin.mysql: R39-3 successfully loaded.
+[16:39:54]   Loaded.
+[16:39:54]  Loading plugin: sscanf.so
+[16:39:54] 
+
+[16:39:54]  ===============================
+
+[16:39:54]       sscanf plugin loaded.     
+
+[16:39:54]          Version:  2.8.1        
+
+[16:39:54]    (c) 2012 Alex "Y_Less" Cole  
+
+[16:39:54]  ===============================
+
+[16:39:54]   Loaded.
+[16:39:54]  Loading plugin: streamer.so
+[16:39:54] 
+
+*** Streamer Plugin v2.7.8 by Incognito loaded ***
+
+[16:39:54]   Loaded.
+[16:39:54]  Loading plugin: iTD.so
+[16:39:54]   Failed (plugins/iTD.so: cannot open shared object file: No such file or directory)
+[16:39:54]  Loaded 4 plugins.
+
+[16:39:55] 
+[16:39:55] Filterscripts
+[16:39:55] ---------------
+[16:39:55]   Loaded 0 filterscripts.
+
+[16:39:56] OnGameo
+[16:39:56] Server password has been removed.
+[16:39:56] MySQL connection: OK
+[16:39:56] 
+------------------------------
+[16:39:56]  Start date: 24.06.2016
+[16:39:56] ------------------------------
+[16:39:56] Number of vehicle models: 27
+[16:39:57] [serv_log]  Load warehouse. Time: 1 ms.
+[16:39:57] [serv_log]  Load job business. Load: 4 b. Time: 0 ms.
+[16:39:57] [serv_log]  Load auto business. Load: 2 b. Time: 1 ms.
+[16:40:00] [serv_log]  Load kvartiry. Load: 461 b. Time: 3301 ms.
+[16:40:00] [serv_log]  Load houses. Load: 115 h. Time: 101 ms.
+[16:40:00] [serv_log]  Load business. Load: 42 b. Time: 99 ms.
+[17:35:25] [server_log] save all. Time: 578 ms.
+[18:35:59] [server_log] save all. Time: 450 ms.
+[19:05:47] Incoming connection: 212.55.97.156:58537
+[19:05:47] [join] Rock has joined the server (0:212.55.97.156)
+[19:05:51] [server_log] 212.55.97.156 is. Crasher.
+[19:07:02] [part] Rock has left the server (0:1)
+[19:07:24] Incoming connection: 212.55.97.156:51935
+[19:07:25] [join] Rock has joined the server (0:212.55.97.156)
+[19:15:05] [part] Rock has left the server (0:1)
+[19:35:38] [server_log] save all. Time: 448 ms.
+[20:35:14] [server_log] save all. Time: 490 ms.
+[21:35:51] [server_log] save all. Time: 349 ms.
+[22:35:25] [server_log] save all. Time: 430 ms.
