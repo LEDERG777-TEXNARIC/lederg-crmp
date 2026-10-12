@@ -3,7 +3,6 @@
 #include <a_mysql>
 #include <streamer>
 #include <sscanf2>
-#include <a_mail>
 #include <zcmd>
 #include <crashdetect>
 #include <md5>

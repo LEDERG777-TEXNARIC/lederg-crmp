@@ -15,9 +15,9 @@ def main() -> int:
         "new game mode title": 'SetGameModeText("LEDERG PROJECT")' in source,
         "email field remains in registration": "dialog_EMAIL" in source and "data_EMAIL" in source,
         "email remains in account INSERT": "`email`" in source and "data_EMAIL" in source,
-        "email verification function removed": "EmailCode(" not in source and "CheckEmail(" not in source,
+        "email verification function removed": "EmailCode(" not in source and "CheckEmail(" not in source and "<a_mail>" not in source,
         "email activation dialogs removed": "dialog_OKEMAIL" not in source and "dialog_ALOGIN" not in source,
-        "auto-save calls preserved": all(x in source for x in ("SaveJBData(b);", "SaveKVData(k);", "SaveABData(a);", "SaveHouseData(h);", "SaveBusinessData(b);", "SaveWarehouse();")),
+        "auto-save calls preserved": all(x in source for x in ("SaveJBData(b);", "SaveKVData(kv);", "SaveABData(a);", "SaveHouseData(h);", "SaveBusinessData(b);", "SaveWarehouse();")),
         "SQL email column retained": "`email` varchar(50) NOT NULL" in sql,
         "account ID remains auto-increment": "MODIFY `id` int(111) NOT NULL AUTO_INCREMENT" in sql,
     }
