@@ -14,6 +14,7 @@ def main() -> int:
         "old timed VK ad removed": "vk.com/id86774603" not in source,
         "new game mode title": 'SetGameModeText("LEDERG PROJECT")' in source,
         "email field remains in registration": "dialog_EMAIL" in source and "data_EMAIL" in source,
+        "email prompt explains verification is disabled": "Подтверждение по почте не требуется." in source,
         "email remains in account INSERT": "`email`" in source and "data_EMAIL" in source,
         "email verification function removed": "EmailCode(" not in source and "CheckEmail(" not in source and "<a_mail>" not in source,
         "email activation dialogs removed": "dialog_OKEMAIL" not in source and "dialog_ALOGIN" not in source,
