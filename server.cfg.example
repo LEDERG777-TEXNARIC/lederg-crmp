@@ -1,0 +1,20 @@
+echo Executing Server Config...
+lanmode 0
+hostname LEDERG PROJECT | CR:MP RolePlay
+gamemode0 new 1
+rcon_password REPLACE_WITH_A_UNIQUE_RANDOM_PASSWORD
+announce 1
+query 1
+weburl https://github.com/LEDERG777-TEXNARIC/LEDERG-PROJECT
+maxnpc 0
+onfoot_rate 40
+incar_rate 40
+weapon_rate 40
+stream_distance 300.0
+stream_rate 1000
+maxplayers 100
+mapname Criminal Russia
+chatlogging 0
+bind
+port 1130
+plugins crashdetect.so mysql.so mysql_static.so sscanf.so streamer.so iTD.so

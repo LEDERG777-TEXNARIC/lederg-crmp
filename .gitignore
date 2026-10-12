@@ -1,0 +1,5 @@
+server.cfg
+scriptfiles/mysql_settings.ini
+*.sql
+*.log
+*.tmp
