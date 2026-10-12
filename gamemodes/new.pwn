@@ -5196,7 +5196,6 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 strmid(PLAYER_DATA[playerid][data_EMAIL], inputtext, 0, strlen(inputtext), 50);
                 //mysql_format(dbHandle, query, sizeof(query), "SELECT * FROM `accounts` WHERE `email` = '%e'",PLAYER_DATA[playerid][data_EMAIL]);
-                //mysql_function_query(dbHandle, query, true, "CheckEmail", "d", playerid);
                 ShowPlayerDialogFix(playerid, dialog_SEX, DIALOG_STYLE_MSGBOX, "{66CCFF}Пол", "{FFFFFF}Выберете пол вашего персонажа", "Мужской", "Женский");
             }
         }
