@@ -35,6 +35,19 @@ def main() -> int:
     connect_pos = source.find("dbHandle = mysql_connect", max(startup_guard, 0))
     query_pos = source.find("mysql_function_query(dbHandle", max(connect_pos, 0))
     settings_end = source.find("stock LoadMySQLSettings()")
+    ban_callback_start = source.find("public CheckBan(playerid)")
+    account_callback_start = source.find("public GetAccount(playerid)", ban_callback_start)
+    ban_callback = source[ban_callback_start:account_callback_start] if ban_callback_start >= 0 and account_callback_start > ban_callback_start else ""
+    log_start = source.find("public LOG(tablename[], tname[], itext[])")
+    log_end = source.find("\n}", log_start) if log_start >= 0 else -1
+    log_function = source[log_start:log_end] if log_start >= 0 and log_end > log_start else ""
+
+    query_format_strings = []
+    for match in re.finditer(r"mysql_format\([^;]*?\);", source, re.DOTALL):
+        literals = re.findall(r'"([^"]*)"', match.group(0))
+        if literals:
+            query_format_strings.append(literals[0])
+    raw_percent_s = [fmt for fmt in query_format_strings if "%s" in fmt]
 
     checks = {
         "clean phpMyAdmin import exists": SQL.is_file(),
@@ -46,6 +59,7 @@ def main() -> int:
             name in source for name in ("Трамповское ОПГ", "Майкопское ОПГ", "Одесское ОПГ")
         ),
         "old timed VK promotion removed": "vk.com/id86774603" not in source,
+        "legacy external game branding removed": "Rage RolePlay" not in source,
         "game mode title is LEDERG PROJECT": 'SetGameModeText("LEDERG PROJECT")' in source,
         "email registration remains enabled": "dialog_EMAIL" in source and "data_EMAIL" in source,
         "registration explains no email verification": "Подтверждение по почте не требуется." in source,
@@ -88,13 +102,25 @@ def main() -> int:
             re.search(r"\bCOMMIT\s*;", sql, re.IGNORECASE) is not None
             and re.search(r"SET FOREIGN_KEY_CHECKS\s*=\s*1\s*;", sql, re.IGNORECASE) is not None
         ),
-        "registration SQL escapes strings rather than inserting raw referral input": (
+        "account registration escapes all string parameters": (
             account_insert is not None
             and "MD5('%e')" in account_insert.group(0)
             and account_insert.group(0).count("%e") >= 5
             and "%s" not in account_insert.group(0)
         ),
-        "login SQL escapes password input": "AND `password` = MD5('%e')" in source,
+        "login password is escaped in the CheckBan callback": "AND `password` = MD5('%e')" in ban_callback
+        and "MD5('%s')" not in ban_callback,
+        "ban removal escapes player-provided name": "DELETE FROM `banlist` WHERE `name` = '%e'" in source,
+        "political-team insert escapes all user-provided strings": "VALUES ('%e', '%e', '%e')" in source,
+        "audit log validates table names and escapes row values": (
+            all(f'"{table}"' in log_function for table in ("log_player", "log_paymoney", "log_transfermoney"))
+            and "VALUES ('%e',NOW(), '%e', '%e')" in log_function
+        ),
+        "SQL formats contain no raw string placeholders except the allowlisted log table": (
+            len(raw_percent_s) == 1 and raw_percent_s[0].count("%s") == 1 and "`%s`" in raw_percent_s[0]
+        ),
+        "admin name lookups escape supplied values": source.count("SELECT * FROM `accounts` WHERE `name` = '%e'") >= 3
+        and "SELECT * FROM `accounts` WHERE `name` = '%s'" not in source,
         "MySQL configuration failure stops startup before queries": (
             startup_guard >= 0 and connect_pos > startup_guard and query_pos > connect_pos
             and 'SendRconCommand("exit");' in source[startup_guard:connect_pos]
@@ -109,6 +135,7 @@ def main() -> int:
             )
         ),
         "MySQL settings buffers support long values": "new MySQLSettings[MYSQL_SETTINGS][128];" in source,
+        "game-mode exit closes only an initialized DB handle": "if(dbHandle) mysql_close(dbHandle);" in source,
         "hard-coded MySQL secrets removed": not any(
             item in source for item in ("#define MySQL_HOST", "#define MySQL_USER", "#define MySQL_PASS", "#define MySQL_DB")
         ),

@@ -1,27 +1,43 @@
 # LEDERG PROJECT — CR:MP RolePlay
 
-Legacy Pawn/CR-MP roleplay gamemode, being rebranded in reviewable steps.
+LEDERG PROJECT is a legacy Pawn/CR-MP roleplay server based on the included Criminal Russia gamemode. This repository is being hardened in small, reviewable increments; a successful static check is not a substitute for a Pawn compile or a live game test.
 
-- Server/game-mode name: **LEDERG PROJECT | CR:MP RolePlay**.
-- Faction display names: ID 5 **Бандера ОПГ**, ID 6 **LEDERG ОПГ**, ID 7 **Вагнер ОПГ**. Numeric IDs and database keys are preserved.
-- Removed recurring VK promotion while preserving auto-save calls.
-- Replaced old in-game TextDraw branding.
-- Removed hard-coded MySQL credential macros from the source.
-- Registration still collects and stores an email address, but no email verification code is required or sent. Admin login no longer blocks on the broken email-code challenge.
-- The existing SQL dump already defines `accounts.email` and `accounts.id` AUTO_INCREMENT; no schema migration is needed for this change.
+## What's configured
 
-## Setup
+- Server and gamemode branding: **LEDERG PROJECT | CR:MP RolePlay**.
+- Faction display labels: ID 5 **Бандера ОПГ**, ID 6 **LEDERG ОПГ**, ID 7 **Вагнер ОПГ**. Faction IDs and database keys are unchanged.
+- The recurring VK advert has been removed; game-state autosave calls are preserved.
+- Registration stores the supplied email but does not send a verification code.
+- MySQL settings are read locally from `mysql_settings.ini`; missing/empty settings or a failed DB connection stop the server rather than letting the gamemode run against a broken database.
+- SQL string inputs in account creation, login, ban removal, political-team registration, admin account lookup, and audit logging are escaped before use.
 
-1. Use the compiler, server binary, and includes compatible with this legacy CR-MP build; record a baseline compile before any compiler upgrade.
-2. Copy `server.cfg.example` to `server.cfg`, set a unique strong RCON password, and use the port assigned by the provider.
-3. Copy `scriptfiles/mysql_settings.example.ini` to `scriptfiles/mysql_settings.ini` and enter the correct DB settings locally. Never commit the live file.
-4. Compile `gamemodes/new.pwn` and deploy the matching `gamemodes/new.amx`; do not ship a stale AMX after source changes.
-5. Test registration/login, database persistence, organization menus/GPS/storage, capture messages, and auto-save on staging.
+## Database setup (phpMyAdmin)
 
-## Security warning
+1. Create an **empty** database in phpMyAdmin and select it.
+2. Import **[`database/LEDERG-PROJECT-phpMyAdmin.sql`](database/LEDERG-PROJECT-phpMyAdmin.sql)**.
+3. Create a database user restricted to this database and grant only the required permissions.
+4. Copy `scriptfiles/mysql_settings.example.ini` to `scriptfiles/mysql_settings.ini` and fill in the real host, username, password, and database locally. Do not commit the real settings file.
+5. The clean import creates 14 source-compatible tables and sanitized world/property seeds. It does not create the database itself and does not insert player accounts, emails, IP addresses, bans, or payment history.
+6. Do **not** import the obsolete `gs147466.sql` dump. It has been removed from the current branch because it contained personal/account data.
 
-Earlier public revisions contained runtime credentials and a SQL dump. Removing files from the current tree does **not** erase Git history. Rotate the affected MySQL and RCON credentials immediately and coordinate a history cleanup before considering the public repository clean. Never reuse old credentials.
+The original game mode uses MD5 for password compatibility and the `accounts.password` column remains 32 characters. This is legacy security, not a modern password-storage scheme; a safe password migration requires code and data migration tests.
 
-The included legacy LICENSE restricts distribution and derivative works. Verify rights to modify and redistribute the original server package and preserve upstream notices.
+## Server setup
 
-See `docs/LEDERG-PROJECT-ROADMAP.md` for next steps.
+1. Use the compiler, server binary, and includes compatible with this legacy CR-MP build; record the compiler version.
+2. Copy `server.cfg.example` to `server.cfg`. Change the example RCON password to a unique random value and set the port assigned by the host.
+3. Keep the live MySQL config and real credentials outside Git.
+4. Compile `gamemodes/new.pwn` and deploy the matching `gamemodes/new.amx`. Do not run an old AMX with newer source.
+5. Test registration/login, account load/save, MySQL outage handling, organization menus/storage, capture messages, and autosave on a disposable staging database before replacing a live server.
+
+## Automated checks and release status
+
+GitHub Actions runs `python tools/verify_rebrand.py` on pushes and pull requests. The checks cover branding, sensitive-dump exclusion, SQL schema compatibility, and risky raw SQL string formatting. They do **not** compile Pawn or prove that runtime gameplay works.
+
+**Release gate:** this branch must still pass a compatible Pawn compile and live staging smoke tests before being considered production-ready.
+
+## Security notes
+
+Removing the old SQL dump from the current tree does **not** erase prior Git history. Earlier public revisions contained database/player information and runtime credentials. Rotate any exposed MySQL/RCON credentials and plan a repository history cleanup before redistributing the repository. Never reuse an exposed password.
+
+The included legacy LICENSE restricts distribution and derivative works. Verify rights to modify and redistribute the original package and preserve upstream notices.

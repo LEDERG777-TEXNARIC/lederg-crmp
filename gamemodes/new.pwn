@@ -147,7 +147,7 @@ enum MYSQL_SETTINGS
 	HOS7_PASSWORD,
 	HOS7_DATABASE
 }
-new MySQLSettings[MYSQL_SETTINGS][30];
+new MySQLSettings[MYSQL_SETTINGS][128];
 enum noclipenum
 {
 	cameramode,
@@ -1824,7 +1824,7 @@ public OnGameModeInit()
     
     if(X2DAY == false) SendRconCommand("hostname LEDERG PROJECT | CR:MP RolePlay");
     else SendRconCommand("hostname LEDERG PROJECT | CR:MP RolePlay");
-	//SendRconCommand("hostname Rage RolePlay | GTA Criminal Russia (Тестовый сервер)");
+	// Legacy external branding removed; LEDERG PROJECT is configured above.
 	
 	
     SendRconCommand("mapname Criminal Russia");
@@ -1832,17 +1832,21 @@ public OnGameModeInit()
 	LoadObjects();
 	LoadMaps();
     // Подключение к базе данных
-    LoadMySQLSettings();
-    dbHandle = mysql_connect(MySQLSettings[HOS7_HOST],MySQLSettings[HOS7_USERNAME],MySQLSettings[HOS7_DATABASE],MySQLSettings[HOS7_PASSWORD]);
-    if(mysql_errno(dbHandle) != 0)
-	{
-	    print("MySQL connection: ERROR");
-	}
-    else
+    if(!LoadMySQLSettings())
     {
-        print("MySQL connection: OK");
+        print("[LEDERG][FATAL] MySQL settings are invalid; stopping the server.");
+        SendRconCommand("exit");
+        return 0;
     }
     mysql_log(LOG_ERROR | LOG_WARNING);
+    dbHandle = mysql_connect(MySQLSettings[HOS7_HOST],MySQLSettings[HOS7_USERNAME],MySQLSettings[HOS7_DATABASE],MySQLSettings[HOS7_PASSWORD]);
+    if(mysql_errno(dbHandle) != 0)
+    {
+        print("[LEDERG][FATAL] MySQL connection failed; stopping the server.");
+        SendRconCommand("exit");
+        return 0;
+    }
+    print("MySQL connection: OK");
     mysql_function_query(dbHandle, "SET NAMES cp1251", false, "", "");
     mysql_set_charset("cp1251");
     
@@ -2251,7 +2255,7 @@ public OnGameModeInit()
 
 public OnGameModeExit()
 {
-    mysql_close(dbHandle);
+    if(dbHandle) mysql_close(dbHandle);
 	return true;
 }
 
@@ -6058,7 +6062,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				strmid(POLIT_DEVIZ[playerid], inputtext, 0, 50, 50);
 				new string[256];
-				mysql_format(dbHandle, string, sizeof(string), "INSERT INTO `polit_team` (`name`,`deviz`, `owner`) VALUES ('%s', '%s', '%s')", POLIT_NAME[playerid], POLIT_DEVIZ[playerid], PLAYER_DATA[playerid][data_NAME]);
+				mysql_format(dbHandle, string, sizeof(string), "INSERT INTO `polit_team` (`name`,`deviz`, `owner`) VALUES ('%e', '%e', '%e')", POLIT_NAME[playerid], POLIT_DEVIZ[playerid], PLAYER_DATA[playerid][data_NAME]);
 				mysql_function_query(dbHandle, string, false, "", "");
 
 				strmid(POLIT_TEAM[TotalPolitT][data_NAME], POLIT_NAME[playerid], 0, strlen(POLIT_NAME[playerid]), 30);
@@ -11681,7 +11685,7 @@ public CheckFreeKassa(playerid)
         format(query, sizeof(query), "UPDATE `freekassa_payments` SET `status` = '1', `update_date` = '%s' WHERE `nick` = '%s' AND `status` = '0' LIMIT 1",strtime, PLAYER_DATA[playerid][data_NAME]);
 		mysql_function_query(dbHandle, query, false, "", "");
 
-		format(query2, sizeof(query2), "SELECT * FROM `accounts` WHERE `name` = '%s' LIMIT 1",PLAYER_DATA[playerid][data_NAME]);
+		format(query2, sizeof(query2), "SELECT * FROM `accounts` WHERE `name` = '%e' LIMIT 1",PLAYER_DATA[playerid][data_NAME]);
         mysql_function_query(dbHandle, query2, true, "CheckDonate", "i", playerid);
     }
     else
@@ -13208,7 +13212,7 @@ public CheckBan(playerid)
     else
     {
         new query[150];
-        mysql_format(dbHandle, query, sizeof(query), "SELECT * FROM `accounts` WHERE `name` = '%e' AND `password` = MD5('%s')",PLAYER_DATA[playerid][data_NAME],PLAYER_DATA[playerid][data_PASSWORD]);
+        mysql_format(dbHandle, query, sizeof(query), "SELECT * FROM `accounts` WHERE `name` = '%e' AND `password` = MD5('%e')",PLAYER_DATA[playerid][data_NAME],PLAYER_DATA[playerid][data_PASSWORD]);
 		mysql_function_query(dbHandle, query, true, "LoadPlayerData", "d", playerid);
     }
     return true;
@@ -13321,7 +13325,7 @@ public UnbanAccount(playerid,name[])
     if(rows)
 	{
 	    new query[150];
-	    mysql_format(dbHandle,query, sizeof(query), "DELETE FROM `banlist` WHERE `name` = '%s'", name);
+	    mysql_format(dbHandle,query, sizeof(query), "DELETE FROM `banlist` WHERE `name` = '%e'", name);
 	    mysql_function_query(dbHandle, query, false, "", "");
      	new str[145];
 	    format(str,sizeof(str),"[A] %s разбанил акаунт %s",PLAYER_DATA[playerid][data_NAME],name);
@@ -15316,10 +15320,17 @@ stock ProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5)
 
 public LOG(tablename[], tname[], itext[])
 {
+    if(strcmp(tablename, "log_player", true) != 0 &&
+       strcmp(tablename, "log_paymoney", true) != 0 &&
+       strcmp(tablename, "log_transfermoney", true) != 0)
+    {
+        print("[LEDERG][WARN] Rejected an unsupported audit-log table.");
+        return 0;
+    }
 	new string[1024],hour,minute,second,timestr[64];
 	gettime(hour,minute,second);
 	format(timestr,sizeof(timestr),"%02d:%02d:%02d",hour,minute,second);
-	mysql_format(dbHandle,string, sizeof(string), "INSERT INTO `%s` (`name`,`date`, `time`, `text`) VALUES ('%s',NOW(), '%s', '%s')", tablename, tname, timestr, itext);
+	mysql_format(dbHandle,string, sizeof(string), "INSERT INTO `%s` (`name`,`date`, `time`, `text`) VALUES ('%e',NOW(), '%e', '%e')", tablename, tname, timestr, itext);
 	mysql_function_query(dbHandle, string, true, "", "");
 	return true;
 }
@@ -15493,7 +15504,7 @@ stock SpawnPlayerAC(playerid)
 stock CreateAccount(playerid)
 {
 	new query[300];
-    mysql_format(dbHandle, query, sizeof(query), "INSERT INTO `accounts` ( `name`, `password`, `email`, `register_ip`, `referal`, `sex`, `regdate_day`, `regdate_month`, `regdate_year`, `skin`) VALUES ( '%e', MD5('%e'), '%e', '%s', '%s', '%d', '%d', '%d', '%d', '%d')",
+    mysql_format(dbHandle, query, sizeof(query), "INSERT INTO `accounts` ( `name`, `password`, `email`, `register_ip`, `referal`, `sex`, `regdate_day`, `regdate_month`, `regdate_year`, `skin`) VALUES ( '%e', MD5('%e'), '%e', '%e', '%e', '%d', '%d', '%d', '%d', '%d')",
 	PLAYER_DATA[playerid][data_NAME],PLAYER_DATA[playerid][data_PASSWORD],PLAYER_DATA[playerid][data_EMAIL],PLAYER_DATA[playerid][data_REGISTER_IP],PLAYER_DATA[playerid][data_REFERAL],PLAYER_DATA[playerid][data_SEX],PLAYER_DATA[playerid][data_REGDATE_DAY],PLAYER_DATA[playerid][data_REGDATE_MONTH],PLAYER_DATA[playerid][data_REGDATE_YEAR],PLAYER_DATA[playerid][data_SKIN]);
     mysql_function_query(dbHandle, query, false, "", "");
     SavePlayerData(playerid);
@@ -18496,7 +18507,7 @@ CMD:offleader(playerid,params[])
 
 
 	new query[60];
- 	mysql_format(dbHandle,query, sizeof(query), "SELECT * FROM `accounts` WHERE `name` = '%s'",params[0]);
+ 	mysql_format(dbHandle,query, sizeof(query), "SELECT * FROM `accounts` WHERE `name` = '%e'",params[0]);
  	mysql_function_query(dbHandle, query, true, "OffLeader", "is", playerid, params[0]);
 	return true;
 }
@@ -21654,7 +21665,7 @@ CMD:offpmember(playerid,params[])
 	{
 		if(sscanf(params, "s[24]", params[0])) return SendClientMessage(playerid, COLOR_WARNING, "Используйте: /offpmember [имя]");
 	    new query[60];
- 		format(query, sizeof(query), "SELECT * FROM `accounts` WHERE `name` = '%s'",params[0]);
+ 		format(query, sizeof(query), "SELECT * FROM `accounts` WHERE `name` = '%e'",params[0]);
  		mysql_function_query(dbHandle, query, true, "OffPMember", "is", playerid, params[0]);
 	}
 	else SendClientMessage(playerid, COLOR_WARNING,"Данная функция доступна только основателю партии!");
@@ -22351,22 +22362,49 @@ CMD:piss(playerid)
 }
 stock LoadMySQLSettings()
 {
-	new FileID = ini_openFile("mysql_settings.ini"),errCode;
-	if(FileID < 0)
-	{
-		printf("Error while opening MySQL settings file. Error code: %d",FileID);
-		return 0;
-	}
-	errCode = ini_getString(FileID,"host",MySQLSettings[HOS7_HOST]);
-	if(errCode < 0) printf("Error while reading MySQL settings file (host). Error code: %d",errCode);
-	errCode = ini_getString(FileID,"username",MySQLSettings[HOS7_USERNAME]);
-	if(errCode < 0) printf("Error while reading MySQL settings file (username). Error code: %d",errCode);
-	errCode = ini_getString(FileID,"password",MySQLSettings[HOS7_PASSWORD]);
-	if(errCode < 0) printf("Error while reading MySQL settings file (password). Error code: %d",errCode);
-	errCode = ini_getString(FileID,"database",MySQLSettings[HOS7_DATABASE]);
-	if(errCode < 0) printf("Error while reading MySQL settings file (database). Error code: %d",errCode);
-	ini_closeFile(FileID);
-	return 1;
+    new FileID = ini_openFile("mysql_settings.ini"), errCode;
+    if(FileID < 0)
+    {
+        printf("[LEDERG][FATAL] Cannot open mysql_settings.ini (error %d).", FileID);
+        return 0;
+    }
+    errCode = ini_getString(FileID, "host", MySQLSettings[HOS7_HOST]);
+    if(errCode < 0)
+    {
+        print("[LEDERG][FATAL] mysql_settings.ini is missing host.");
+        ini_closeFile(FileID);
+        return 0;
+    }
+    errCode = ini_getString(FileID, "username", MySQLSettings[HOS7_USERNAME]);
+    if(errCode < 0)
+    {
+        print("[LEDERG][FATAL] mysql_settings.ini is missing username.");
+        ini_closeFile(FileID);
+        return 0;
+    }
+    errCode = ini_getString(FileID, "password", MySQLSettings[HOS7_PASSWORD]);
+    if(errCode < 0)
+    {
+        print("[LEDERG][FATAL] mysql_settings.ini is missing password.");
+        ini_closeFile(FileID);
+        return 0;
+    }
+    errCode = ini_getString(FileID, "database", MySQLSettings[HOS7_DATABASE]);
+    if(errCode < 0)
+    {
+        print("[LEDERG][FATAL] mysql_settings.ini is missing database.");
+        ini_closeFile(FileID);
+        return 0;
+    }
+    if(!strlen(MySQLSettings[HOS7_HOST]) || !strlen(MySQLSettings[HOS7_USERNAME]) ||
+       !strlen(MySQLSettings[HOS7_PASSWORD]) || !strlen(MySQLSettings[HOS7_DATABASE]))
+    {
+        print("[LEDERG][FATAL] MySQL host, username, password, and database must not be empty.");
+        ini_closeFile(FileID);
+        return 0;
+    }
+    ini_closeFile(FileID);
+    return 1;
 }
 
 
