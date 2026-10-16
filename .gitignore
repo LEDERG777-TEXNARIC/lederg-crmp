@@ -1,0 +1,6 @@
+server.cfg
+scriptfiles/mysql_settings.ini
+*.sql
+!database/LEDERG-PROJECT-phpMyAdmin.sql
+*.log
+*.tmp

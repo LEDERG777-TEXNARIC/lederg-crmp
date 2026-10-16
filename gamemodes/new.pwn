@@ -3,7 +3,6 @@
 #include <a_mysql>
 #include <streamer>
 #include <sscanf2>
-#include <a_mail>
 #include <zcmd>
 #include <crashdetect>
 #include <md5>
@@ -22,10 +21,6 @@ AntiDeAMX()
 }
 
 
-#define MySQL_HOST     "185.112.80.31"
-#define MySQL_USER     "gs14146"
-#define MySQL_PASS     "wH3qZHivcd"
-#define MySQL_DB       "gs14146"
 
 //Авто
 #define PlayerIsNotInCar 					"Вы должны находится в транспорте!"
@@ -152,7 +147,7 @@ enum MYSQL_SETTINGS
 	HOS7_PASSWORD,
 	HOS7_DATABASE
 }
-new MySQLSettings[MYSQL_SETTINGS][30];
+new MySQLSettings[MYSQL_SETTINGS][128];
 enum noclipenum
 {
 	cameramode,
@@ -174,7 +169,6 @@ new bool:X2DAY;
 forward CheckFreeKassa(playerid);
 forward CheckDonate(playerid);
 forward CheckAccount(playerid);
-forward CheckEmail(playerid);
 forward LoadPlayerData(playerid);
 forward anim_OFF(playerid);
 forward UnfreezePlayer(playerid);
@@ -926,11 +920,11 @@ new teleport[][E_TELEPORT_STRUCT] = {
 	{"{FFCC00}Для выхода нажмите 'ALT'", 250.8918,1790.5049,563.0800, 1, 2133.1904,-1982.1346,20.2498, 0.0, 0, 0},
 	
 	/* МАЙКОП */
-	{"{33FFCC}Майкопское ОПГ\n{FFCC00}Для входа нажмите 'ALT'", 465.3291,-1249.7666,41.8893, 0, 252.8017,475.0405,575.3100, 90.0, 2, 2},
+	{"{33FFCC}LEDERG ОПГ\n{FFCC00}Для входа нажмите 'ALT'", 465.3291,-1249.7666,41.8893, 0, 252.8017,475.0405,575.3100, 90.0, 2, 2},
 	{"{FFCC00}Для выхода нажмите 'ALT'", 252.8017,475.0405,575.3100, 2, 465.3291,-1249.7666,41.8893, 0.0, 0, 0},
 	
 	/* ОДЕССА */
-	{"{33FFCC}Одесское ОПГ\n{FFCC00}Для входа нажмите 'ALT'", 1764.0726,1334.1837,10.1264, 0, 252.8017,475.0405,575.3100, 90.0, 3, 3},
+	{"{33FFCC}Вагнер ОПГ\n{FFCC00}Для входа нажмите 'ALT'", 1764.0726,1334.1837,10.1264, 0, 252.8017,475.0405,575.3100, 90.0, 3, 3},
 	{"{FFCC00}Для выхода нажмите 'ALT'", 252.8017,475.0405,575.3100, 3, 1764.0726,1334.1837,10.1264, 0.0, 0, 0},
 	
 	/* ФСБ */
@@ -970,9 +964,9 @@ new setleader_config[][SL] = {
 	{2, 14,"Армия"},
 	{3, 15,"Полиция"},
 	{4, 6,"Больница"},
-	{5, 7,"Трамповское ОПГ"},
-	{6, 7,"Майкопское ОПГ"},
-	{7, 7,"Одесское ОПГ"},
+	{5, 7,"Бандера ОПГ"},
+	{6, 7,"LEDERG ОПГ"},
+	{7, 7,"Вагнер ОПГ"},
 	{8, 14,"ФСБ"},
 	{9, 7,"СМИ"}
 };
@@ -1171,7 +1165,6 @@ enum P_DATA
 	data_DEXP,
 	// NO SAVE
 	data_CHANGESKIN,
-	data_ECODE,
 	bool:data_ANIM,
 	data_WALK_TIMER,
 	data_WALK_STYLE,
@@ -1476,7 +1469,6 @@ enum
 	dialog_LOGIN,
 	dialog_REFERAL,
 	dialog_SEX,
-	dialog_OKEMAIL,
 	dialog_EMAIL,
 	dialog_ANIM,
 	dialog_MAINMENU,
@@ -1662,7 +1654,6 @@ enum
 	dialog_RENTCATER,
 	dialog_CATER,
 	dialog_CASINO,
-	dialog_ALOGIN,
 	dialog_ADM_COMMAND,
 	dialog_PROMOCODE,
 	dialog_FIXCAR,
@@ -1692,7 +1683,7 @@ new PLAYER_COLOR_TEAM[10] = {
 	0xCC666630, // больница
 	0xCC663330, // роствоское
 	0x99993330, // майкопское
-	0x33999930, // одесское
+	0x33999930, // вагнер
 	0x33669930, // фсб
 	0x66FF6630 // сми
 };
@@ -1708,9 +1699,9 @@ new PLAYER_COLOR_CHAT[10][CC] = {
 	"{336633}", // армия
 	"{3399FF}", // полиция
 	"{CC6666}", // больница
-	"{CC6633}", // Трамповское
+	"{CC6633}", // Бандера
 	"{999933}", // майопское
-	"{339999}", // одесское
+	"{339999}", // вагнер
 	"{336699}", // фсб
 	"{66FF66}" // сми
 };
@@ -1831,9 +1822,9 @@ public OnGameModeInit()
     SendRconCommand("password 0");
     //SendRconCommand("hostname Запланированные тех.работы | 10 минут");
     
-    if(X2DAY == false) SendRconCommand("hostname Namalsk Role Play by FreeCastleHOST");
-    else SendRconCommand("hostname hostname Namalsk Role Play by FreeCastleHOST");
-	//SendRconCommand("hostname Rage RolePlay | GTA Criminal Russia (Тестовый сервер)");
+    if(X2DAY == false) SendRconCommand("hostname LEDERG PROJECT | CR:MP RolePlay");
+    else SendRconCommand("hostname LEDERG PROJECT | CR:MP RolePlay");
+	// Legacy external branding removed; LEDERG PROJECT is configured above.
 	
 	
     SendRconCommand("mapname Criminal Russia");
@@ -1841,17 +1832,21 @@ public OnGameModeInit()
 	LoadObjects();
 	LoadMaps();
     // Подключение к базе данных
-    LoadMySQLSettings();
-    dbHandle = mysql_connect(MySQLSettings[HOS7_HOST],MySQLSettings[HOS7_USERNAME],MySQLSettings[HOS7_DATABASE],MySQLSettings[HOS7_PASSWORD]);
-    if(mysql_errno(dbHandle) != 0)
-	{
-	    print("MySQL connection: ERROR");
-	}
-    else
+    if(!LoadMySQLSettings())
     {
-        print("MySQL connection: OK");
+        print("[LEDERG][FATAL] MySQL settings are invalid; stopping the server.");
+        SendRconCommand("exit");
+        return 0;
     }
     mysql_log(LOG_ERROR | LOG_WARNING);
+    dbHandle = mysql_connect(MySQLSettings[HOS7_HOST],MySQLSettings[HOS7_USERNAME],MySQLSettings[HOS7_DATABASE],MySQLSettings[HOS7_PASSWORD]);
+    if(mysql_errno(dbHandle) != 0)
+    {
+        print("[LEDERG][FATAL] MySQL connection failed; stopping the server.");
+        SendRconCommand("exit");
+        return 0;
+    }
+    print("MySQL connection: OK");
     mysql_function_query(dbHandle, "SET NAMES cp1251", false, "", "");
     mysql_set_charset("cp1251");
     
@@ -1881,7 +1876,7 @@ public OnGameModeInit()
 	DisableInteriorEnterExits();
 	EnableStuntBonusForAll(0);
 	SetNameTagDrawDistance(15.0);
-	SetGameModeText("Positive TV");
+	SetGameModeText("LEDERG PROJECT");
 	
 	
 	police_barrier_status[0] = GATES_CLOSED;
@@ -2260,7 +2255,7 @@ public OnGameModeInit()
 
 public OnGameModeExit()
 {
-    mysql_close(dbHandle);
+    if(dbHandle) mysql_close(dbHandle);
 	return true;
 }
 
@@ -2603,7 +2598,7 @@ public OnPlayerSpawn(playerid)
 		mysql_function_query(dbHandle, query, true, "CheckAccount", "d", playerid);
 		SelectTextDraw(playerid,0xddddddff);
 		
-		SendClientMessage(playerid,0x3399FF00,"Добро пожаловать на Positive TV - Test!");
+		SendClientMessage(playerid,0x3399FF00,"Добро пожаловать на LEDERG PROJECT!");
     	if(X2DAY == true) SendClientMessage(playerid,0xFFCC0000,"На сервере действует акция x2 Day. Донат, зарплаты разнорабочих и опыт увеличиваются вдвое");
         
         TogglePlayerControllable(playerid, true);
@@ -4300,7 +4295,7 @@ public OnPlayerSelectedMenuRow(playerid, row)
                 TogglePlayerControllable(playerid, true);
                 DeletePVar(playerid,"player_auth");
                 for(new x; x <30; x++) SendClientMessage(playerid, -1, " ");
-                SendClientMessage(playerid, 0xFF9999FF, "Добро пожаловать на сервер с режимом RolePlay. Подробно о режиме Вы можете узнать на нашем сайте: bicbai.ru");
+                SendClientMessage(playerid, 0xFF9999FF, "Добро пожаловать на сервер с режимом RolePlay. Подробно о режиме Вы можете узнать на нашем сайте: LEDERG PROJECT");
                 SendClientMessage(playerid, 0xFF9999FF, "Если Вы новичек, то обязательно прочитайте помощь на спавне (место где Вы появляетесь в игре)");
                 SendClientMessage(playerid, 0xFF9999FF, "По любому вопросу, Вы можете обратиться к Администрации сервера с помощью команды /mm > репорт");
                 SendClientMessage(playerid, 0xFF9999FF, "Для того, чтобы ввести команду нажмите клавишу F6 или английскую T (все команды начинаются с символа '/')");
@@ -5188,7 +5183,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				getdate(PLAYER_DATA[playerid][data_REGDATE_YEAR], PLAYER_DATA[playerid][data_REGDATE_MONTH], PLAYER_DATA[playerid][data_REGDATE_DAY]);
 				GetPlayerIp(playerid,PLAYER_DATA[playerid][data_REGISTER_IP],32);
 				strmid(PLAYER_DATA[playerid][data_PASSWORD], inputtext, 0, strlen(inputtext), 30);
-				ShowPlayerDialogFix(playerid, dialog_EMAIL, DIALOG_STYLE_INPUT, "{66CCFF}Email", "{FFFFFF}Введите адрес Вашей электронной почты\nИспользуя его, Вы сможете восстановить доступ к аккаунту\nв случае его взлома или если забудете пароль\n\nУбедитесь в правильности ввода и нажмите 'Далее'", "Далее", "");
+				ShowPlayerDialogFix(playerid, dialog_EMAIL, DIALOG_STYLE_INPUT, "{66CCFF}Email", "{FFFFFF}Укажите email для аккаунта. Подтверждение по почте не требуется.\nНажмите Далее.", "Далее", "");
 			}
 		}
 
@@ -5197,15 +5192,14 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if(response || !response)
             {
                // new query[46+50];
-                if(!strlen(inputtext)) return ShowPlayerDialogFix(playerid, dialog_EMAIL, DIALOG_STYLE_INPUT, "{66CCFF}Email", "{FFFFFF}Введите адрес Вашей электронной почты\nИспользуя его, Вы сможете восстановить доступ к аккаунту\nв случае его взлома или если забудете пароль\n\nУбедитесь в правильности ввода и нажмите 'Далее'", "Далее", "");
+                if(!strlen(inputtext)) return ShowPlayerDialogFix(playerid, dialog_EMAIL, DIALOG_STYLE_INPUT, "{66CCFF}Email", "{FFFFFF}Укажите email для аккаунта. Подтверждение по почте не требуется.\nНажмите Далее.", "Далее", "");
                 if(strfind(inputtext, "@", true) == -1 || strfind(inputtext, "\n", true) != -1 || strfind(inputtext, ".", true) == -1)
                 {
-                    ShowPlayerDialogFix(playerid, dialog_EMAIL, DIALOG_STYLE_INPUT, "{66CCFF}Email", "{FFFFFF}Введите адрес Вашей электронной почты\nИспользуя его, Вы сможете восстановить доступ к аккаунту\nв случае его взлома или если забудете пароль\n\nУбедитесь в правильности ввода и нажмите 'Далее'", "Далее", "");
+                    ShowPlayerDialogFix(playerid, dialog_EMAIL, DIALOG_STYLE_INPUT, "{66CCFF}Email", "{FFFFFF}Укажите email для аккаунта. Подтверждение по почте не требуется.\nНажмите Далее.", "Далее", "");
                     return true;
                 }
                 strmid(PLAYER_DATA[playerid][data_EMAIL], inputtext, 0, strlen(inputtext), 50);
                 //mysql_format(dbHandle, query, sizeof(query), "SELECT * FROM `accounts` WHERE `email` = '%e'",PLAYER_DATA[playerid][data_EMAIL]);
-                //mysql_function_query(dbHandle, query, true, "CheckEmail", "d", playerid);
                 ShowPlayerDialogFix(playerid, dialog_SEX, DIALOG_STYLE_MSGBOX, "{66CCFF}Пол", "{FFFFFF}Выберете пол вашего персонажа", "Мужской", "Женский");
             }
         }
@@ -5227,15 +5221,6 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			   	mysql_function_query(dbHandle, query, true, "CheckBan", "i", playerid);
 			}
 		}
-
-		case dialog_OKEMAIL:
-  		{
-  		    if(response || !response)
-  		    {
-				if(strval(inputtext) != PLAYER_DATA[playerid][data_ECODE]) return ShowPlayerDialogFix(playerid, dialog_OKEMAIL, DIALOG_STYLE_INPUT, "{66CCFF}Email", "{FFFFFF}Введите код активации. Он был выслан к Вам на email\n{FFCC33}Чтобы свернуть игру используйте: ALT + TAB", "Далее", "");
-                ShowPlayerDialogFix(playerid, dialog_SEX, DIALOG_STYLE_MSGBOX, "{66CCFF}Пол", "{FFFFFF}Выберете пол вашего персонажа", "Мужской", "Женский");
-		  	}
-  		}
 
   		case dialog_SEX:
   		{
@@ -6077,7 +6062,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				strmid(POLIT_DEVIZ[playerid], inputtext, 0, 50, 50);
 				new string[256];
-				mysql_format(dbHandle, string, sizeof(string), "INSERT INTO `polit_team` (`name`,`deviz`, `owner`) VALUES ('%s', '%s', '%s')", POLIT_NAME[playerid], POLIT_DEVIZ[playerid], PLAYER_DATA[playerid][data_NAME]);
+				mysql_format(dbHandle, string, sizeof(string), "INSERT INTO `polit_team` (`name`,`deviz`, `owner`) VALUES ('%e', '%e', '%e')", POLIT_NAME[playerid], POLIT_DEVIZ[playerid], PLAYER_DATA[playerid][data_NAME]);
 				mysql_function_query(dbHandle, string, false, "", "");
 
 				strmid(POLIT_TEAM[TotalPolitT][data_NAME], POLIT_NAME[playerid], 0, strlen(POLIT_NAME[playerid]), 30);
@@ -8448,7 +8433,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendFractionMessage(PLAYER_DATA[playerid][data_MEMBER],0xFF9999FF,str);
 						
 						new str1[256];
-                        format(str1,sizeof(str1),"{3366FF}Трамповское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",rostov_wh[0],rostov_wh[1],rostov_wh[2]);
+                        format(str1,sizeof(str1),"{3366FF}Бандера ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",rostov_wh[0],rostov_wh[1],rostov_wh[2]);
                         UpdateDynamic3DTextLabelText(rostov_sklad_text, -1, str1);
                         SaveWarehouse();
 					}
@@ -8465,7 +8450,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendFractionMessage(PLAYER_DATA[playerid][data_MEMBER],0xFF9999FF,str);
 
 						new str2[256];
-						format(str2,sizeof(str2),"{3366FF}Майкопское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",maykop_wh[0],maykop_wh[1],maykop_wh[2]);
+						format(str2,sizeof(str2),"{3366FF}LEDERG ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",maykop_wh[0],maykop_wh[1],maykop_wh[2]);
 					    UpdateDynamic3DTextLabelText(maykop_sklad_text, -1, str2);
 					    SaveWarehouse();
 					}
@@ -8482,7 +8467,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendFractionMessage(PLAYER_DATA[playerid][data_MEMBER],0xFF9999FF,str);
 						
 						new str3[256];
-						format(str3,sizeof(str3),"{3366FF}Одесское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",odessa_wh[0],odessa_wh[1],odessa_wh[2]);
+						format(str3,sizeof(str3),"{3366FF}Вагнер ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",odessa_wh[0],odessa_wh[1],odessa_wh[2]);
 						UpdateDynamic3DTextLabelText(odessa_sklad_text, -1, str3);
 						SaveWarehouse();
 					}
@@ -8511,7 +8496,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendFractionMessage(PLAYER_DATA[playerid][data_MEMBER],0xFF9999FF,str);
 						
 						new str1[256];
-                        format(str1,sizeof(str1),"{3366FF}Трамповское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",rostov_wh[0],rostov_wh[1],rostov_wh[2]);
+                        format(str1,sizeof(str1),"{3366FF}Бандера ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",rostov_wh[0],rostov_wh[1],rostov_wh[2]);
                         UpdateDynamic3DTextLabelText(rostov_sklad_text, -1, str1);
                         SaveWarehouse();
 					}
@@ -8530,7 +8515,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendFractionMessage(PLAYER_DATA[playerid][data_MEMBER],0xFF9999FF,str);
 						
 						new str2[256];
-						format(str2,sizeof(str2),"{3366FF}Майкопское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",maykop_wh[0],maykop_wh[1],maykop_wh[2]);
+						format(str2,sizeof(str2),"{3366FF}LEDERG ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",maykop_wh[0],maykop_wh[1],maykop_wh[2]);
 					    UpdateDynamic3DTextLabelText(maykop_sklad_text, -1, str2);
 					    SaveWarehouse();
 					}
@@ -8549,7 +8534,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendFractionMessage(PLAYER_DATA[playerid][data_MEMBER],0xFF9999FF,str);
 						
 						new str3[256];
-						format(str3,sizeof(str3),"{3366FF}Одесское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",odessa_wh[0],odessa_wh[1],odessa_wh[2]);
+						format(str3,sizeof(str3),"{3366FF}Вагнер ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",odessa_wh[0],odessa_wh[1],odessa_wh[2]);
 						UpdateDynamic3DTextLabelText(odessa_sklad_text, -1, str3);
 						SaveWarehouse();
 					}
@@ -8577,7 +8562,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendFractionMessage(PLAYER_DATA[playerid][data_MEMBER],0xFF9999FF,str);
 						
 						new str1[256];
-                        format(str1,sizeof(str1),"{3366FF}Трамповское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",rostov_wh[0],rostov_wh[1],rostov_wh[2]);
+                        format(str1,sizeof(str1),"{3366FF}Бандера ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",rostov_wh[0],rostov_wh[1],rostov_wh[2]);
                         UpdateDynamic3DTextLabelText(rostov_sklad_text, -1, str1);
                         SaveWarehouse();
 
@@ -8595,7 +8580,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendFractionMessage(PLAYER_DATA[playerid][data_MEMBER],0xFF9999FF,str);
 						
 						new str2[256];
-						format(str2,sizeof(str2),"{3366FF}Майкопское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",maykop_wh[0],maykop_wh[1],maykop_wh[2]);
+						format(str2,sizeof(str2),"{3366FF}LEDERG ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",maykop_wh[0],maykop_wh[1],maykop_wh[2]);
 					    UpdateDynamic3DTextLabelText(maykop_sklad_text, -1, str2);
 					    SaveWarehouse();
 					}
@@ -8612,7 +8597,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendFractionMessage(PLAYER_DATA[playerid][data_MEMBER],0xFF9999FF,str);
 						
 						new str3[256];
-						format(str3,sizeof(str3),"{3366FF}Одесское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",odessa_wh[0],odessa_wh[1],odessa_wh[2]);
+						format(str3,sizeof(str3),"{3366FF}Вагнер ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",odessa_wh[0],odessa_wh[1],odessa_wh[2]);
 						UpdateDynamic3DTextLabelText(odessa_sklad_text, -1, str3);
 						SaveWarehouse();
 					}
@@ -8641,7 +8626,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendFractionMessage(PLAYER_DATA[playerid][data_MEMBER],0xFF9999FF,str);
 						
 						new str1[256];
-                        format(str1,sizeof(str1),"{3366FF}Трамповское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",rostov_wh[0],rostov_wh[1],rostov_wh[2]);
+                        format(str1,sizeof(str1),"{3366FF}Бандера ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",rostov_wh[0],rostov_wh[1],rostov_wh[2]);
                         UpdateDynamic3DTextLabelText(rostov_sklad_text, -1, str1);
                         SaveWarehouse();
 					}
@@ -8660,7 +8645,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendFractionMessage(PLAYER_DATA[playerid][data_MEMBER],0xFF9999FF,str);
 						
 						new str2[256];
-						format(str2,sizeof(str2),"{3366FF}Майкопское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",maykop_wh[0],maykop_wh[1],maykop_wh[2]);
+						format(str2,sizeof(str2),"{3366FF}LEDERG ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",maykop_wh[0],maykop_wh[1],maykop_wh[2]);
 					    UpdateDynamic3DTextLabelText(maykop_sklad_text, -1, str2);
 					    SaveWarehouse();
 					}
@@ -8679,7 +8664,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendFractionMessage(PLAYER_DATA[playerid][data_MEMBER],0xFF9999FF,str);
 						
 						new str3[256];
-						format(str3,sizeof(str3),"{3366FF}Одесское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",odessa_wh[0],odessa_wh[1],odessa_wh[2]);
+						format(str3,sizeof(str3),"{3366FF}Вагнер ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",odessa_wh[0],odessa_wh[1],odessa_wh[2]);
 						UpdateDynamic3DTextLabelText(odessa_sklad_text, -1, str3);
 						SaveWarehouse();
 					}
@@ -8707,7 +8692,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendFractionMessage(PLAYER_DATA[playerid][data_MEMBER],0xFF9999FF,str);
 						
 						new str1[256];
-                        format(str1,sizeof(str1),"{3366FF}Трамповское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",rostov_wh[0],rostov_wh[1],rostov_wh[2]);
+                        format(str1,sizeof(str1),"{3366FF}Бандера ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",rostov_wh[0],rostov_wh[1],rostov_wh[2]);
                         UpdateDynamic3DTextLabelText(rostov_sklad_text, -1, str1);
                         SaveWarehouse();
 
@@ -8725,7 +8710,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendFractionMessage(PLAYER_DATA[playerid][data_MEMBER],0xFF9999FF,str);
 						
 						new str2[256];
-						format(str2,sizeof(str2),"{3366FF}Майкопское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",maykop_wh[0],maykop_wh[1],maykop_wh[2]);
+						format(str2,sizeof(str2),"{3366FF}LEDERG ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",maykop_wh[0],maykop_wh[1],maykop_wh[2]);
 					    UpdateDynamic3DTextLabelText(maykop_sklad_text, -1, str2);
 					    SaveWarehouse();
 					}
@@ -8742,7 +8727,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendFractionMessage(PLAYER_DATA[playerid][data_MEMBER],0xFF9999FF,str);
 						
 						new str3[256];
-						format(str3,sizeof(str3),"{3366FF}Одесское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",odessa_wh[0],odessa_wh[1],odessa_wh[2]);
+						format(str3,sizeof(str3),"{3366FF}Вагнер ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",odessa_wh[0],odessa_wh[1],odessa_wh[2]);
 						UpdateDynamic3DTextLabelText(odessa_sklad_text, -1, str3);
 						SaveWarehouse();
 					}
@@ -8771,7 +8756,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendFractionMessage(PLAYER_DATA[playerid][data_MEMBER],0xFF9999FF,str);
 						
 						new str1[256];
-                        format(str1,sizeof(str1),"{3366FF}Трамповское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",rostov_wh[0],rostov_wh[1],rostov_wh[2]);
+                        format(str1,sizeof(str1),"{3366FF}Бандера ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",rostov_wh[0],rostov_wh[1],rostov_wh[2]);
                         UpdateDynamic3DTextLabelText(rostov_sklad_text, -1, str1);
                         SaveWarehouse();
 					}
@@ -8790,7 +8775,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendFractionMessage(PLAYER_DATA[playerid][data_MEMBER],0xFF9999FF,str);
 						
 						new str2[256];
-						format(str2,sizeof(str2),"{3366FF}Майкопское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",maykop_wh[0],maykop_wh[1],maykop_wh[2]);
+						format(str2,sizeof(str2),"{3366FF}LEDERG ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",maykop_wh[0],maykop_wh[1],maykop_wh[2]);
 					    UpdateDynamic3DTextLabelText(maykop_sklad_text, -1, str2);
 					    SaveWarehouse();
 					}
@@ -8809,47 +8794,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendFractionMessage(PLAYER_DATA[playerid][data_MEMBER],0xFF9999FF,str);
 						
 						new str3[256];
-						format(str3,sizeof(str3),"{3366FF}Одесское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",odessa_wh[0],odessa_wh[1],odessa_wh[2]);
+						format(str3,sizeof(str3),"{3366FF}Вагнер ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",odessa_wh[0],odessa_wh[1],odessa_wh[2]);
 						UpdateDynamic3DTextLabelText(odessa_sklad_text, -1, str3);
 						SaveWarehouse();
 					}
 				}
    			}
-		}
-		
-		case dialog_ALOGIN:
-		{
-		    if(!response)
-		    {
-		        new str[145];
-				format(str,sizeof(str),"[A] Администратор %s (%s) [admlvl: %d] не смог авторизоваться на сервере",PLAYER_DATA[playerid][data_NAME],PLAYER_DATA[playerid][data_LOGIN_IP],PLAYER_DATA[playerid][data_ADMLVL]);
-				SendAdminMessage(COLOR_AC,str);
-	            Kick(playerid);
-		        return true;
-		    }
-		    if(response)
-		    {
-		        DeletePVar(playerid,"player_auth");
-		        PLAYER_DATA[playerid][data_LOGGED] = true;
-		        CancelSelectTextDraw(playerid);
-		        TogglePlayerControllable(playerid, true);
-		        
-       			SpawnPlayerAC(playerid);
-		
-		
-		
-		        new str[145];
-		        if(PLAYER_DATA[playerid][data_ECODE] == strval(inputtext))
-		        {
-		            for(new i = 0; i < 9; i++) TextDrawShowForPlayer(playerid, CheatText[i]);
-					format(str,sizeof(str),"[A] Администратор %s (%s) [admlvl: %d] авторизовался на сервере",PLAYER_DATA[playerid][data_NAME],PLAYER_DATA[playerid][data_LOGIN_IP],PLAYER_DATA[playerid][data_ADMLVL]);
-					SendAdminMessage(COLOR_AC,str);
-		            return true;
-				}
-				format(str,sizeof(str),"[A] Администратор %s (%s) [admlvl: %d] не смог авторизоваться на сервере",PLAYER_DATA[playerid][data_NAME],PLAYER_DATA[playerid][data_LOGIN_IP],PLAYER_DATA[playerid][data_ADMLVL]);
-				SendAdminMessage(COLOR_AC,str);
-	            Kick(playerid);
-		    }
 		}
 		
 		case dialog_SHAHTA_STOPJOB:
@@ -9184,7 +9134,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				        SendClientMessage(playerid,0x33CC99FF,"[GPS]: Автосалон был отмечен на карте");
 					}
 					case 3:ShowPlayerDialogFix(playerid, dialog_GPS_6, DIALOG_STYLE_LIST, "{FFCC00}Важные места", "ЖД Вокзал", "Выбрать", "Назад");
-					case 4:ShowPlayerDialogFix(playerid, dialog_GPS_7, DIALOG_STYLE_LIST, "{FFCC00}Базы организаций", "Правительство\nАрмия\nПолиция\nБольница\nТрамповское ОПГ\nМайкопское ОПГ\nОдесское ОПГ\nФСБ\nСМИ", "Выбрать", "Назад");
+					case 4:ShowPlayerDialogFix(playerid, dialog_GPS_7, DIALOG_STYLE_LIST, "{FFCC00}Базы организаций", "Правительство\nАрмия\nПолиция\nБольница\nБандера ОПГ\nLEDERG ОПГ\nВагнер ОПГ\nФСБ\nСМИ", "Выбрать", "Назад");
 					case 5: ShowPlayerDialogFix(playerid, dialog_GPS_3, DIALOG_STYLE_INPUT, "{FFCC00}Поиск дома", "{FFFFFF}Введите номер дома, который хотите найти", "Найти", "Назад");
 					case 6: ShowPlayerDialogFix(playerid, dialog_GPS_4, DIALOG_STYLE_INPUT, "{FFCC00}Поиск подъезда", "{FFFFFF}Введите номер подъезда, который хотите найти", "Найти", "Назад");
          			case 7: ShowPlayerDialogFix(playerid, dialog_GPS_5, DIALOG_STYLE_INPUT, "{FFCC00}Поиск бизнеса", "{FFFFFF}Введите номер бизнеса, который хотите найти", "Найти", "Назад");
@@ -9328,7 +9278,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SetPVarFloat(playerid, "gps_pos_z", 18.9069);
 				        DisablePlayerCheckpoint(playerid);
 				        SetPlayerCheckpoint(playerid,2160.5093,-1766.6997,18.9069,5.0);
-				        SendClientMessage(playerid,0x33CC99FF,"[GPS]: Трамповское ОПГ было отмечено на карте");
+				        SendClientMessage(playerid,0x33CC99FF,"[GPS]: Бандера ОПГ было отмечено на карте");
 		            }
 		            case 5:
 		            {
@@ -9337,7 +9287,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SetPVarFloat(playerid, "gps_pos_z", 41.8893);
 				        DisablePlayerCheckpoint(playerid);
 				        SetPlayerCheckpoint(playerid,465.3291,-1249.7666,41.8893,5.0);
-				        SendClientMessage(playerid,0x33CC99FF,"[GPS]: Майкопское ОПГ было отмечено на карте");
+				        SendClientMessage(playerid,0x33CC99FF,"[GPS]: LEDERG ОПГ было отмечено на карте");
 		            }
 		            case 6:
 		            {
@@ -9346,7 +9296,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SetPVarFloat(playerid, "gps_pos_z", 10.1264);
 				        DisablePlayerCheckpoint(playerid);
 				        SetPlayerCheckpoint(playerid,1764.0726,1334.1837,10.1264,5.0);
-				        SendClientMessage(playerid,0x33CC99FF,"[GPS]: Одесское ОПГ было отмечено на карте");
+				        SendClientMessage(playerid,0x33CC99FF,"[GPS]: Вагнер ОПГ было отмечено на карте");
 		            }
 		            case 7:
 		            {
@@ -11587,23 +11537,6 @@ public CheckAccount(playerid)
 	return true;
 }
 
-public CheckEmail(playerid)
-{
-    new rows, fields;
-    cache_get_data(rows, fields);
-    if(rows)
-	{
-	    SendClientMessage(playerid, 0x66666600, "Данный email уже используется на этом сервере");
-	    ShowPlayerDialogFix(playerid, dialog_EMAIL, DIALOG_STYLE_INPUT, "{66CCFF}Email", "{FFFFFF}Введите адрес Вашей электронной почты\nИспользуя его, Вы сможете восстановить доступ к аккаунту\nв случае его взлома или если забудете пароль\n\nНа email будет выслан код подтверждения\nЕго нужно будет ввести в следующем окне\n\nУбедитесь в правильности ввода и нажмите 'Далее'", "Далее", "");
-	}
-	else
-    {
-  		EmailCode(playerid, PLAYER_DATA[playerid][data_EMAIL]);
-		ShowPlayerDialogFix(playerid, dialog_OKEMAIL, DIALOG_STYLE_INPUT, "{66CCFF}Email", "{FFFFFF}Введите код активации. Он был выслан к Вам на email\n{FFCC33}Чтобы свернуть игру используйте: ALT + TAB", "Далее", "");
-	}
-    return true;
-}
-
 public KamenLoaded(playerid)
 {
     if(IsPlayerAttachedObjectSlotUsed(playerid,1)) RemovePlayerAttachedObject(playerid,1);
@@ -11752,7 +11685,7 @@ public CheckFreeKassa(playerid)
         format(query, sizeof(query), "UPDATE `freekassa_payments` SET `status` = '1', `update_date` = '%s' WHERE `nick` = '%s' AND `status` = '0' LIMIT 1",strtime, PLAYER_DATA[playerid][data_NAME]);
 		mysql_function_query(dbHandle, query, false, "", "");
 
-		format(query2, sizeof(query2), "SELECT * FROM `accounts` WHERE `name` = '%s' LIMIT 1",PLAYER_DATA[playerid][data_NAME]);
+		format(query2, sizeof(query2), "SELECT * FROM `accounts` WHERE `name` = '%e' LIMIT 1",PLAYER_DATA[playerid][data_NAME]);
         mysql_function_query(dbHandle, query2, true, "CheckDonate", "i", playerid);
     }
     else
@@ -11773,7 +11706,7 @@ public LoadDonate(playerid)
         cache_get_field_content(0, "donate_p", temp), PLAYER_DATA[playerid][data_DONATE_P] = strval (temp);
         cache_get_field_content(0, "donate_all", temp), PLAYER_DATA[playerid][data_DONATE_ALL] = strval (temp);
         new str[350];
-		format(str,sizeof(str),"{FFFFFF}В данном разделе составлен список услуг, которыми можно воспользоваться\nпополнив свой донат кошелек на нашем сайте: {336699}bicbai.ru (раздел 'Донат')\n\n{33CC99}Информация:\n{CCCC66}Текущее состояние счета: %d донат-очков\nПоследнее пополнение: %d донат-очков\nВсего пополнений: %d донат-очков",PLAYER_DATA[playerid][data_DONATE],PLAYER_DATA[playerid][data_DONATE_P],PLAYER_DATA[playerid][data_DONATE_ALL]);
+		format(str,sizeof(str),"{FFFFFF}В данном разделе составлен список услуг, которыми можно воспользоваться\nпополнив свой донат кошелек на нашем сайте: {336699}LEDERG PROJECT (раздел 'Донат')\n\n{33CC99}Информация:\n{CCCC66}Текущее состояние счета: %d донат-очков\nПоследнее пополнение: %d донат-очков\nВсего пополнений: %d донат-очков",PLAYER_DATA[playerid][data_DONATE],PLAYER_DATA[playerid][data_DONATE_P],PLAYER_DATA[playerid][data_DONATE_ALL]);
 		SendClientMessage(playerid,0xCC6633FF, str);
         
 				
@@ -12085,9 +12018,9 @@ public LoadBusiness()
 					new mafia[16];
 					switch(BUSINESS_DATA[b][data_MAFIA])
 					{
-					    case 5: mafia = "Трамповское ОПГ";
-					    case 6: mafia = "Майкопское ОПГ";
-					    case 7: mafia = "Одесское ОПГ";
+					    case 5: mafia = "Бандера ОПГ";
+					    case 6: mafia = "LEDERG ОПГ";
+					    case 7: mafia = "Вагнер ОПГ";
 					    default: mafia = "Нет";
 					}
 		 	        format(str,sizeof(str), "{3399FF}%s\n{CCFF00}Владелец: {FFFFFF}%s\n{CCFF00}Топлива: {FFFFFF}%i л\n{CCFF00}Цена за 1 л: {FFFFFF}%i рублей\n{CCFF00}Закупочная цена: {FFFFFF}%i рублей\n{CCFF00}Крыша: {FFFFFF}%s\n{339966}/buyfuel",BUSINESS_DATA[b][data_NAME],BUSINESS_DATA[b][data_OWNER],BUSINESS_DATA[b][data_PROD],BUSINESS_DATA[b][data_CENA],BUSINESS_DATA[b][data_PRICEPROD],mafia);
@@ -12108,9 +12041,9 @@ public LoadBusiness()
      	            new mafia[16];
 					switch(BUSINESS_DATA[b][data_MAFIA])
 					{
-					    case 6: mafia = "Трамповское ОПГ";
-					    case 7: mafia = "Майкопское ОПГ";
-					    case 8: mafia = "Одесское ОПГ";
+					    case 6: mafia = "Бандера ОПГ";
+					    case 7: mafia = "LEDERG ОПГ";
+					    case 8: mafia = "Вагнер ОПГ";
 					    default: mafia = "Нет";
 					}
 					format(str,sizeof(str), "{3399FF}%s\n{CCFF00}Владелец: {FFFFFF}%s\n{CCFF00}Продуктов: {FFFFFF}%i шт\n{CCFF00}Закупочная цена: {FFFFFF}%i рублей\n{CCFF00}Крыша: {FFFFFF}%s\n{FE2E2E}Вход бесплатный",BUSINESS_DATA[b][data_NAME],BUSINESS_DATA[b][data_OWNER],BUSINESS_DATA[b][data_PROD],BUSINESS_DATA[b][data_PRICEPROD],mafia);
@@ -12372,9 +12305,9 @@ public LoadWarehouse()
 
 		new str1[256],str2[256],str3[256],str4[256];
 
-		format(str1,sizeof(str1),"{3366FF}Трамповское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",rostov_wh[0],rostov_wh[1],rostov_wh[2]);
-		format(str2,sizeof(str2),"{3366FF}Майкопское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",maykop_wh[0],maykop_wh[1],maykop_wh[2]);
-		format(str3,sizeof(str3),"{3366FF}Одесское ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",odessa_wh[0],odessa_wh[1],odessa_wh[2]);
+		format(str1,sizeof(str1),"{3366FF}Бандера ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",rostov_wh[0],rostov_wh[1],rostov_wh[2]);
+		format(str2,sizeof(str2),"{3366FF}LEDERG ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",maykop_wh[0],maykop_wh[1],maykop_wh[2]);
+		format(str3,sizeof(str3),"{3366FF}Вагнер ОПГ\n{FFFFFF}Металла на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Патронов на складе: {FF6600}%d/30000 шт.\n{FFFFFF}Наркотиков на складе: {FF6600}%d/30000 шт.",odessa_wh[0],odessa_wh[1],odessa_wh[2]);
 		
 		format(str4,sizeof(str4),"{3366FF}Склад армии\n{FFFFFF}Металла на складе: {FF6600}%d шт.\n{FFFFFF}Патронов на складе: {FF6600}%d шт.",army_wh[0],army_wh[1]);
 
@@ -12515,7 +12448,7 @@ public OffPMember(playerid,name[])
 }
 public LoadPlayerData(playerid)
 {
-	new rows, fields, temp[10],login_ip[32];
+    new rows, fields, temp[10];
     cache_get_data(rows, fields);
     if(rows)
 	{
@@ -12533,7 +12466,6 @@ public LoadPlayerData(playerid)
 		cache_get_field_content(0, "admlvl", temp), PLAYER_DATA[playerid][data_ADMLVL] = strval (temp);
 		cache_get_field_content(0, "contry", temp), PLAYER_DATA[playerid][data_CONTRY] = strval (temp);
 		cache_get_field_content(0, "register_ip", PLAYER_DATA[playerid][data_REGISTER_IP], dbHandle, 32);
-		cache_get_field_content(0, "login_ip", login_ip, dbHandle, 32);
 		cache_get_field_content(0, "email", PLAYER_DATA[playerid][data_EMAIL], dbHandle, 50);
 		cache_get_field_content(0, "regdate_day", temp), PLAYER_DATA[playerid][data_REGDATE_DAY] = strval (temp);
 		cache_get_field_content(0, "regdate_month", temp), PLAYER_DATA[playerid][data_REGDATE_MONTH] = strval (temp);
@@ -12638,14 +12570,6 @@ public LoadPlayerData(playerid)
 		cache_get_field_content(0, "podarok7", temp), PLAYER_DATA[playerid][data_PODAROK][6] = strval (temp);
 		cache_get_field_content(0, "podarok8", temp), PLAYER_DATA[playerid][data_PODAROK][7] = strval (temp);
 		
-
-        if(PLAYER_DATA[playerid][data_ADMLVL] >= 1 && strfind(PLAYER_DATA[playerid][data_LOGIN_IP], login_ip, true) == -1)
-		{
-		    EmailCode(playerid, PLAYER_DATA[playerid][data_EMAIL]);
-            ShowPlayerDialogFix(playerid, dialog_ALOGIN, DIALOG_STYLE_INPUT, "{FFCC00}ALoign", "{FFFFFF}На Ваш электронный адрес был отправлен секртеный код\nВведите его в нижнее окошко, чтобы авторизоваться", "OK", "");
-			return true;
-		}
-
 
         new str[145];
 		if(PLAYER_DATA[playerid][data_ADMLVL] > 1)
@@ -13288,7 +13212,7 @@ public CheckBan(playerid)
     else
     {
         new query[150];
-        mysql_format(dbHandle, query, sizeof(query), "SELECT * FROM `accounts` WHERE `name` = '%e' AND `password` = MD5('%s')",PLAYER_DATA[playerid][data_NAME],PLAYER_DATA[playerid][data_PASSWORD]);
+        mysql_format(dbHandle, query, sizeof(query), "SELECT * FROM `accounts` WHERE `name` = '%e' AND `password` = MD5('%e')",PLAYER_DATA[playerid][data_NAME],PLAYER_DATA[playerid][data_PASSWORD]);
 		mysql_function_query(dbHandle, query, true, "LoadPlayerData", "d", playerid);
     }
     return true;
@@ -13355,9 +13279,9 @@ public LoadAllLeaders(playerid)
 			case 2: ltext = "Армия";
 			case 3: ltext = "Полиция";
    			case 4: ltext = "Больница";
-			case 5: ltext = "Трамповское ОПГ";
-			case 6: ltext = "Майкопское ОПГ";
-			case 7: ltext = "Одесское ОПГ";
+			case 5: ltext = "Бандера ОПГ";
+			case 6: ltext = "LEDERG ОПГ";
+			case 7: ltext = "Вагнер ОПГ";
 			case 8: ltext = "ФСБ";
 			case 9: ltext = "СМИ";
   		}
@@ -13401,7 +13325,7 @@ public UnbanAccount(playerid,name[])
     if(rows)
 	{
 	    new query[150];
-	    mysql_format(dbHandle,query, sizeof(query), "DELETE FROM `banlist` WHERE `name` = '%s'", name);
+	    mysql_format(dbHandle,query, sizeof(query), "DELETE FROM `banlist` WHERE `name` = '%e'", name);
 	    mysql_function_query(dbHandle, query, false, "", "");
      	new str[145];
 	    format(str,sizeof(str),"[A] %s разбанил акаунт %s",PLAYER_DATA[playerid][data_NAME],name);
@@ -13558,7 +13482,6 @@ public SecondTimer()
 
 			case 35:
 			{
-			    SendClientMessageToAll(0xFFCC00AA,"Наш сайт: bicbai.ru, а также наша группа ВКонтакте: vk.com/id86774603.");
 			    SendClientMessageToAll(0xFFCC00AA,"Спасибо, что выбрали наш сервер для приятной игры!");
 
 			    new time = GetTickCount();
@@ -14596,9 +14519,9 @@ stock UpdateBusinessData(b)
 		    new mafia[16];
 			switch(BUSINESS_DATA[b][data_MAFIA])
 			{
-				case 5: mafia = "Трамповское ОПГ";
-				case 6: mafia = "Майкопское ОПГ";
-				case 7: mafia = "Одесское ОПГ";
+				case 5: mafia = "Бандера ОПГ";
+				case 6: mafia = "LEDERG ОПГ";
+				case 7: mafia = "Вагнер ОПГ";
 				default: mafia = "Нет";
 			}
 	    	format(str,sizeof(str), "{3399FF}%s\n{CCFF00}Владелец: {FFFFFF}%s\n{CCFF00}Топлива: {FFFFFF}%i л\n{CCFF00}Цена за 1 л: {FFFFFF}%i рублей\n{CCFF00}Закупочная цена: {FFFFFF}%i рублей\n{CCFF00}Крыша: {FFFFFF}%s\n{339966}/buyfuel",BUSINESS_DATA[b][data_NAME],BUSINESS_DATA[b][data_OWNER],BUSINESS_DATA[b][data_PROD],BUSINESS_DATA[b][data_CENA],BUSINESS_DATA[b][data_PRICEPROD],mafia);
@@ -14617,9 +14540,9 @@ stock UpdateBusinessData(b)
 		    new mafia[16];
 			switch(BUSINESS_DATA[b][data_MAFIA])
 			{
-				case 5: mafia = "Трамповское ОПГ";
-				case 6: mafia = "Майкопское ОПГ";
-				case 7: mafia = "Одесское ОПГ";
+				case 5: mafia = "Бандера ОПГ";
+				case 6: mafia = "LEDERG ОПГ";
+				case 7: mafia = "Вагнер ОПГ";
 				default: mafia = "Нет";
 			}
 			format(str,sizeof(str), "{3399FF}%s\n{CCFF00}Владелец: {FFFFFF}%s\n{CCFF00}Продуктов: {FFFFFF}%i шт\n{CCFF00}Цена покупки продуктов: {FFFFFF}%i рублей\n{CCFF00}Крыша: {FFFFFF}%s\n{FE2E2E}Вход бесплатный",BUSINESS_DATA[b][data_NAME],BUSINESS_DATA[b][data_OWNER],BUSINESS_DATA[b][data_PROD],BUSINESS_DATA[b][data_PRICEPROD],mafia);
@@ -15235,7 +15158,7 @@ stock ReportDialog(playerid)
 	strcat(dtext, "{FFFFFF}- отключить от сервера (kick)\n");
 	strcat(dtext, "{FFFFFF}- лишить возможности писать (mute)\n");
 	strcat(dtext, "{FFFFFF}- заблокировать (ban)\n\n");
-	strcat(dtext, "{FFFFFF}Данные правила установлены для всех игроков {339966}bicbai.ru");
+	strcat(dtext, "{FFFFFF}Данные правила установлены для всех игроков {339966}LEDERG PROJECT");
 	ShowPlayerDialogFix(playerid,dialog_REPORT,DIALOG_STYLE_INPUT,"{FFCC00}Репорт",dtext,"Отправить","Назад");
 	return true;
 }
@@ -15397,10 +15320,17 @@ stock ProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5)
 
 public LOG(tablename[], tname[], itext[])
 {
+    if(strcmp(tablename, "log_player", true) != 0 &&
+       strcmp(tablename, "log_paymoney", true) != 0 &&
+       strcmp(tablename, "log_transfermoney", true) != 0)
+    {
+        print("[LEDERG][WARN] Rejected an unsupported audit-log table.");
+        return 0;
+    }
 	new string[1024],hour,minute,second,timestr[64];
 	gettime(hour,minute,second);
 	format(timestr,sizeof(timestr),"%02d:%02d:%02d",hour,minute,second);
-	mysql_format(dbHandle,string, sizeof(string), "INSERT INTO `%s` (`name`,`date`, `time`, `text`) VALUES ('%s',NOW(), '%s', '%s')", tablename, tname, timestr, itext);
+	mysql_format(dbHandle,string, sizeof(string), "INSERT INTO `%s` (`name`,`date`, `time`, `text`) VALUES ('%e',NOW(), '%e', '%e')", tablename, tname, timestr, itext);
 	mysql_function_query(dbHandle, string, true, "", "");
 	return true;
 }
@@ -15574,7 +15504,7 @@ stock SpawnPlayerAC(playerid)
 stock CreateAccount(playerid)
 {
 	new query[300];
-    mysql_format(dbHandle, query, sizeof(query), "INSERT INTO `accounts` ( `name`, `password`, `email`, `register_ip`, `referal`, `sex`, `regdate_day`, `regdate_month`, `regdate_year`, `skin`) VALUES ( '%e', MD5('%e'), '%e', '%s', '%s', '%d', '%d', '%d', '%d', '%d')",
+    mysql_format(dbHandle, query, sizeof(query), "INSERT INTO `accounts` ( `name`, `password`, `email`, `register_ip`, `referal`, `sex`, `regdate_day`, `regdate_month`, `regdate_year`, `skin`) VALUES ( '%e', MD5('%e'), '%e', '%e', '%e', '%d', '%d', '%d', '%d', '%d')",
 	PLAYER_DATA[playerid][data_NAME],PLAYER_DATA[playerid][data_PASSWORD],PLAYER_DATA[playerid][data_EMAIL],PLAYER_DATA[playerid][data_REGISTER_IP],PLAYER_DATA[playerid][data_REFERAL],PLAYER_DATA[playerid][data_SEX],PLAYER_DATA[playerid][data_REGDATE_DAY],PLAYER_DATA[playerid][data_REGDATE_MONTH],PLAYER_DATA[playerid][data_REGDATE_YEAR],PLAYER_DATA[playerid][data_SKIN]);
     mysql_function_query(dbHandle, query, false, "", "");
     SavePlayerData(playerid);
@@ -15640,21 +15570,21 @@ stock LoadTextDraws()
 	TextDrawFont(casino_fon[1], 2);
 	TextDrawSetProportional(casino_fon[1], 1);
 
-	Logo[0] = TextDrawCreate(548.999633, 6.222287, "POSITIVE");
-	TextDrawLetterSize(Logo[0], 0.490332, 1.998220);
+	Logo[0] = TextDrawCreate(548.000000, 5.000000, "LEDERG");
+	TextDrawLetterSize(Logo[0], 0.420000, 1.650000);
 	TextDrawAlignment(Logo[0], 1);
 	TextDrawColor(Logo[0], -1);
-	TextDrawSetShadow(Logo[0], 1);
+	TextDrawSetShadow(Logo[0], 0);
 	TextDrawSetOutline(Logo[0], 0);
 	TextDrawBackgroundColor(Logo[0], 51);
 	TextDrawFont(Logo[0], 1);
 	TextDrawSetProportional(Logo[0], 1);
 
-	Logo[1] = TextDrawCreate(575.666198, 20.325912, "TV");
-	TextDrawLetterSize(Logo[1], 0.449999, 1.600000);
+	Logo[1] = TextDrawCreate(575.666198, 20.325912, "PROJECT");
+	TextDrawLetterSize(Logo[1], 0.200000, 1.100000);
 	TextDrawAlignment(Logo[1], 2);
-	TextDrawColor(Logo[1], -5963521);
-	TextDrawSetShadow(Logo[1], 1);
+	TextDrawColor(Logo[1], -449235457);
+	TextDrawSetShadow(Logo[1], 0);
 	TextDrawSetOutline(Logo[1], 0);
 	TextDrawBackgroundColor(Logo[1], 51);
 	TextDrawFont(Logo[1], 2);
@@ -16266,15 +16196,6 @@ stock PlayerToKvadrat(playerid, Float:min_x, Float:min_y, Float:max_x, Float:max
 	return false;
 }
 
-stock EmailCode(playerid, email[])
-{
-    new ftext[145];
-	PLAYER_DATA[playerid][data_ECODE] = random(9999);
-	format(ftext,sizeof(ftext),"Код: %d",PLAYER_DATA[playerid][data_ECODE],email);
-	//SendMail(email, "support@ragerp.ru", "Rage RolePlay", "Code", ftext);
-	SendClientMessage(playerid,-1,ftext);
-}
-
 stock ShowPlayerDialogFix(playerid, dialogid, style, caption[], info[], button1[], button2[])
 {
     if(GetPVarInt(playerid, "DialogID") != -2) return true;
@@ -16285,13 +16206,13 @@ stock ShowPlayerDialogFix(playerid, dialogid, style, caption[], info[], button1[
 
 stock Dialog_PLAYER_REGISTER(playerid)
 {
-	ShowPlayerDialogFix(playerid, dialog_REGISTER, DIALOG_STYLE_PASSWORD, "{66CCFF}Регистрация","{FFFFFF}Добро пожаловать на сервер {66CCFF}Positive TV - Test\n{FFFFFF}Чтобы начать игру Вам необходимо пройти регистрацию\n\nВведите пароль для Вашего аккаунта в нижнее окошко\nОн будет запрашиваться каждый раз при входе на сервер\n\n{66CC33}\tПримичания:\n\t- Пароль может состоять из латинских букв и цифр\n\t- Длина пароля от 6-ти до 30-ти символов\n\t- Пароль чувствителен к регистру", "Далее","");
+	ShowPlayerDialogFix(playerid, dialog_REGISTER, DIALOG_STYLE_PASSWORD, "{66CCFF}Регистрация","{FFFFFF}Добро пожаловать на сервер {66CCFF}LEDERG PROJECT\n{FFFFFF}Чтобы начать игру Вам необходимо пройти регистрацию\n\nВведите пароль для Вашего аккаунта в нижнее окошко\nОн будет запрашиваться каждый раз при входе на сервер\n\n{66CC33}\tПримичания:\n\t- Пароль может состоять из латинских букв и цифр\n\t- Длина пароля от 6-ти до 30-ти символов\n\t- Пароль чувствителен к регистру", "Далее","");
     return true;
 }
 stock Dialog_PLAYER_LOGIN(playerid)
 {
     new dtext[256];
-	format(dtext,sizeof(dtext),"{FFFFFF}Добро пожаловать на сервер {339966}Positive TV - Test\n{FFFFFF}\nВаш логин: {FF3300}%s\n{FFFFFF}Для начала игры нужно ввести пароль в окошко",PLAYER_DATA[playerid][data_NAME]);
+	format(dtext,sizeof(dtext),"{FFFFFF}Добро пожаловать на сервер {339966}LEDERG PROJECT\n{FFFFFF}\nВаш логин: {FF3300}%s\n{FFFFFF}Для начала игры нужно ввести пароль в окошко",PLAYER_DATA[playerid][data_NAME]);
 	ShowPlayerDialogFix(playerid, dialog_LOGIN, DIALOG_STYLE_PASSWORD, "{66CCFF}Авторизация",dtext,"Войти","");
 	return true;
 }
@@ -16379,9 +16300,9 @@ stock ShowStats(playerid)
 		case 2: org_text = "Армия";
 		case 3: org_text = "Полиция";
 		case 4: org_text = "Больница";
-		case 5: org_text = "Трамповское ОПГ";
-		case 6: org_text = "Майкопское ОПГ";
-		case 7: org_text = "Одесское ОПГ";
+		case 5: org_text = "Бандера ОПГ";
+		case 6: org_text = "LEDERG ОПГ";
+		case 7: org_text = "Вагнер ОПГ";
 		case 8: org_text = "ФСБ";
 		case 9: org_text = "СМИ";
 	}
@@ -16528,7 +16449,6 @@ stock ClearPlayerData(playerid)
 	PLAYER_DATA[playerid][data_PODMEMBER] = 0;
 	PLAYER_DATA[playerid][data_LEADER] = 0;
 	PLAYER_DATA[playerid][data_RANK] = 0;
-	PLAYER_DATA[playerid][data_ECODE] = 0;
 	for(new i = 0; i < 4; i++) casino_point[playerid][i] = 0;
 	casino_update[playerid] = 0;
 	
@@ -17779,9 +17699,9 @@ stock GetOPGName(fnumbwer)
 	new string[20];
 	switch(fnumbwer)
 	{
-		case 5: format(string,sizeof(string),"Трамповское ОПГ");
-		case 6: format(string,sizeof(string),"Майкопское ОПГ");
-		case 7: format(string,sizeof(string),"Одесское ОПГ");
+		case 5: format(string,sizeof(string),"Бандера ОПГ");
+		case 6: format(string,sizeof(string),"LEDERG ОПГ");
+		case 7: format(string,sizeof(string),"Вагнер ОПГ");
 	}
 	return string;
 }
@@ -18587,7 +18507,7 @@ CMD:offleader(playerid,params[])
 
 
 	new query[60];
- 	mysql_format(dbHandle,query, sizeof(query), "SELECT * FROM `accounts` WHERE `name` = '%s'",params[0]);
+ 	mysql_format(dbHandle,query, sizeof(query), "SELECT * FROM `accounts` WHERE `name` = '%e'",params[0]);
  	mysql_function_query(dbHandle, query, true, "OffLeader", "is", playerid, params[0]);
 	return true;
 }
@@ -18925,7 +18845,7 @@ CMD:setleader(playerid,params[])
 	if(!IsPlayerConnected(params[0]))return  SendClientMessage(playerid,COLOR_WARNING,"Данного ID нет на сервере!");
 	if(PLAYER_DATA[params[0]][data_LOGGED] == false)return  SendClientMessage(playerid,COLOR_WARNING,"Данный игрок не прошел авторизацию!");
 	SetPVarInt(playerid,"gLeader",params[0]);
-	ShowPlayerDialogFix(playerid, dialog_SETLEADER, DIALOG_STYLE_LIST, "{FFCC00}Выберете организацию", "Снять с лидерства\nПравительство\nАрмия\nПолиция\nБольница\nТрамповское ОПГ\nМайкопское ОПГ\nОдесское ОПГ\nФСБ\nСМИ", "Выбрать", "Отмена");
+	ShowPlayerDialogFix(playerid, dialog_SETLEADER, DIALOG_STYLE_LIST, "{FFCC00}Выберете организацию", "Снять с лидерства\nПравительство\nАрмия\nПолиция\nБольница\nБандера ОПГ\nLEDERG ОПГ\nВагнер ОПГ\nФСБ\nСМИ", "Выбрать", "Отмена");
 	return true;
 }
 
@@ -20366,9 +20286,9 @@ CMD:leaders(playerid,params[])
 				case 2: ltext = "Армия";
 				case 3: ltext = "Полиция";
 				case 4: ltext = "Больница";
-				case 5: ltext = "Трамповское ОПГ";
-				case 6: ltext = "Майкопское ОПГ";
-				case 7: ltext = "Одесское ОПГ";
+				case 5: ltext = "Бандера ОПГ";
+				case 6: ltext = "LEDERG ОПГ";
+				case 7: ltext = "Вагнер ОПГ";
 				case 8: ltext = "ФСБ";
 				case 9: ltext = "СМИ";
 			}
@@ -21608,9 +21528,9 @@ CMD:bizlist(playerid,params[])
         new mafia[16];
 		switch(BUSINESS_DATA[b][data_MAFIA])
 		{
-			case 5: mafia = "Трамповское ОПГ";
-			case 6: mafia = "Майкопское ОПГ";
-			case 7: mafia = "Одесское ОПГ";
+			case 5: mafia = "Бандера ОПГ";
+			case 6: mafia = "LEDERG ОПГ";
+			case 7: mafia = "Вагнер ОПГ";
 			default: mafia = "Нет";
 		}
 
@@ -21745,7 +21665,7 @@ CMD:offpmember(playerid,params[])
 	{
 		if(sscanf(params, "s[24]", params[0])) return SendClientMessage(playerid, COLOR_WARNING, "Используйте: /offpmember [имя]");
 	    new query[60];
- 		format(query, sizeof(query), "SELECT * FROM `accounts` WHERE `name` = '%s'",params[0]);
+ 		format(query, sizeof(query), "SELECT * FROM `accounts` WHERE `name` = '%e'",params[0]);
  		mysql_function_query(dbHandle, query, true, "OffPMember", "is", playerid, params[0]);
 	}
 	else SendClientMessage(playerid, COLOR_WARNING,"Данная функция доступна только основателю партии!");
@@ -22364,7 +22284,7 @@ CMD:tp(playerid,params[])
 	if(PLAYER_DATA[playerid][data_LOGGED] == false) return SendClientMessage(playerid,COLOR_WARNING,"Вы не авторизованы на сервере!");
     if(PLAYER_DATA[playerid][data_ADMLVL] < 1) return true;
 	
-	ShowPlayerDialogFix(playerid, dialog_TP, DIALOG_STYLE_LIST, "{FFCC00}Teleport menu", "Банк 'г.Южный'\nАвтошкола\nOOO 'Пиломатериалы'\nOOO 'Рудник'\nООО 'Сад'\nООО 'Огород'\nАвтобаза 'Колесо'\nАвтобаза 'Навигатор'\nГлавный склад\nАренда катеров\nАнашан\nАвтосалон\nМагазин одежды Арзамас\nПравительство\nАрмия\nППС\nГИБДД\nБольница\nТрамповское ОПГ\nМайкопское ОПГ\nОдесское ОПГ\nФСБ\nСМИ\nТрек", "Выбрать", "Отмена");
+	ShowPlayerDialogFix(playerid, dialog_TP, DIALOG_STYLE_LIST, "{FFCC00}Teleport menu", "Банк 'г.Южный'\nАвтошкола\nOOO 'Пиломатериалы'\nOOO 'Рудник'\nООО 'Сад'\nООО 'Огород'\nАвтобаза 'Колесо'\nАвтобаза 'Навигатор'\nГлавный склад\nАренда катеров\nАнашан\nАвтосалон\nМагазин одежды Арзамас\nПравительство\nАрмия\nППС\nГИБДД\nБольница\nБандера ОПГ\nLEDERG ОПГ\nВагнер ОПГ\nФСБ\nСМИ\nТрек", "Выбрать", "Отмена");
     return true;
 }
 
@@ -22442,22 +22362,49 @@ CMD:piss(playerid)
 }
 stock LoadMySQLSettings()
 {
-	new FileID = ini_openFile("mysql_settings.ini"),errCode;
-	if(FileID < 0)
-	{
-		printf("Error while opening MySQL settings file. Error code: %d",FileID);
-		return 0;
-	}
-	errCode = ini_getString(FileID,"host",MySQLSettings[HOS7_HOST]);
-	if(errCode < 0) printf("Error while reading MySQL settings file (host). Error code: %d",errCode);
-	errCode = ini_getString(FileID,"username",MySQLSettings[HOS7_USERNAME]);
-	if(errCode < 0) printf("Error while reading MySQL settings file (username). Error code: %d",errCode);
-	errCode = ini_getString(FileID,"password",MySQLSettings[HOS7_PASSWORD]);
-	if(errCode < 0) printf("Error while reading MySQL settings file (password). Error code: %d",errCode);
-	errCode = ini_getString(FileID,"database",MySQLSettings[HOS7_DATABASE]);
-	if(errCode < 0) printf("Error while reading MySQL settings file (database). Error code: %d",errCode);
-	ini_closeFile(FileID);
-	return 1;
+    new FileID = ini_openFile("mysql_settings.ini"), errCode;
+    if(FileID < 0)
+    {
+        printf("[LEDERG][FATAL] Cannot open mysql_settings.ini (error %d).", FileID);
+        return 0;
+    }
+    errCode = ini_getString(FileID, "host", MySQLSettings[HOS7_HOST]);
+    if(errCode < 0)
+    {
+        print("[LEDERG][FATAL] mysql_settings.ini is missing host.");
+        ini_closeFile(FileID);
+        return 0;
+    }
+    errCode = ini_getString(FileID, "username", MySQLSettings[HOS7_USERNAME]);
+    if(errCode < 0)
+    {
+        print("[LEDERG][FATAL] mysql_settings.ini is missing username.");
+        ini_closeFile(FileID);
+        return 0;
+    }
+    errCode = ini_getString(FileID, "password", MySQLSettings[HOS7_PASSWORD]);
+    if(errCode < 0)
+    {
+        print("[LEDERG][FATAL] mysql_settings.ini is missing password.");
+        ini_closeFile(FileID);
+        return 0;
+    }
+    errCode = ini_getString(FileID, "database", MySQLSettings[HOS7_DATABASE]);
+    if(errCode < 0)
+    {
+        print("[LEDERG][FATAL] mysql_settings.ini is missing database.");
+        ini_closeFile(FileID);
+        return 0;
+    }
+    if(!strlen(MySQLSettings[HOS7_HOST]) || !strlen(MySQLSettings[HOS7_USERNAME]) ||
+       !strlen(MySQLSettings[HOS7_PASSWORD]) || !strlen(MySQLSettings[HOS7_DATABASE]))
+    {
+        print("[LEDERG][FATAL] MySQL host, username, password, and database must not be empty.");
+        ini_closeFile(FileID);
+        return 0;
+    }
+    ini_closeFile(FileID);
+    return 1;
 }
 
 
