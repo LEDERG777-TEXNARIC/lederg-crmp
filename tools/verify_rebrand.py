@@ -78,6 +78,9 @@ def main() -> int:
         "accounts email field matches Pawn code": bool(
             re.search(r"CREATE TABLE `accounts`[\s\S]*?`email`\s+varchar\(50\)\s+NOT NULL", sql)
         ),
+        "account nicknames have a unique database constraint": bool(
+            re.search(r"ALTER TABLE `accounts`\\s+ADD UNIQUE KEY `uq_accounts_name` \\(`name`\\)", sql, re.IGNORECASE)
+        ),
         "accounts.id is auto-increment": bool(
             re.search(
                 r"ALTER TABLE `accounts`\s+MODIFY `id` int\(111\) NOT NULL AUTO_INCREMENT",

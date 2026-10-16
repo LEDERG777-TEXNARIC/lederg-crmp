@@ -450,6 +450,8 @@ CREATE TABLE `warehouse` (
 -- Keys and auto-increment support expected by the gamemode.
 ALTER TABLE `accounts`
   ADD PRIMARY KEY (`id`);
+ALTER TABLE `accounts`
+  ADD UNIQUE KEY `uq_accounts_name` (`name`);
 ALTER TABLE `auto_business`
   ADD PRIMARY KEY (`id`);
 ALTER TABLE `banlist`

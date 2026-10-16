@@ -17,7 +17,7 @@ LEDERG PROJECT is a legacy Pawn/CR-MP roleplay server based on the included Crim
 2. Import **[`database/LEDERG-PROJECT-phpMyAdmin.sql`](database/LEDERG-PROJECT-phpMyAdmin.sql)**.
 3. Create a database user restricted to this database and grant only the required permissions.
 4. Copy `scriptfiles/mysql_settings.example.ini` to `scriptfiles/mysql_settings.ini` and fill in the real host, username, password, and database locally. Do not commit the real settings file.
-5. The clean import creates 14 source-compatible tables and sanitized world/property seeds. It does not create the database itself and does not insert player accounts, emails, IP addresses, bans, or payment history.
+5. The clean import creates 14 source-compatible tables, adds a unique index on account nicknames, and seeds sanitized world/property data. It does not create the database itself and does not insert player accounts, emails, IP addresses, bans, or payment history.
 6. Do **not** import the obsolete `gs147466.sql` dump. It has been removed from the current branch because it contained personal/account data.
 
 The original game mode uses MD5 for password compatibility and the `accounts.password` column remains 32 characters. This is legacy security, not a modern password-storage scheme; a safe password migration requires code and data migration tests.
